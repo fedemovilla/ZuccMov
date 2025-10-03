@@ -1,85 +1,88 @@
-// Simple Exercise Generator Application - Fixed ExRx.net URLs
-class SimpleExerciseGenerator {
+// Enhanced Scientific Exercise Prescription Application with Injury Adaptation System
+class ScientificExerciseApp {
     constructor() {
-        this.selectedMuscles = new Set();
-        this.userInfo = {
-            age: '',
-            experience: '',
-            goal: '',
-            time: ''
-        
-
-    
-fetch('injury_adaptations.json')
-  .then(response => response.json())
-  .then(data => {
-    this.injuryAdaptations = data;
-  });
-};
+        this.selectedZones = new Set();
+        this.userAssessment = {};
         this.location = null;
+        this.injury = "none"; // Default injury state
+        this.safetyIssues = new Set();
         this.currentStep = 1;
+        this.medicalClearanceType = null;
+        this.bypassEnabled = false;
         
-        // Exercise database with CORRECTED ExRx.net URLs
+        // Load injury adaptations data
+        this.injuryAdaptations = {
+            "knee": {
+                "avoid": ["Sentadilla con Barra", "Estocadas Alternadas", "Jumping Jacks", "Mountain Climbers"],
+                "prefer": ["Sentadilla parcial", "Glute bridges", "Wall sits", "Bicicleta Estática", "Caminata Vigorosa"]
+            },
+            "shoulder": {
+                "avoid": ["Press Militar", "Press de Banca con Barra", "Fondos en Silla", "Flexiones Pike"],
+                "prefer": ["Scapular stabilization", "Elevaciones Laterales", "Remo Invertido", "Plancha Estándar"]
+            },
+            "lowerback": {
+                "avoid": ["Peso Muerto Rumano", "Remo con Barra", "Crunch Abdominal"],
+                "prefer": ["Superman", "Plancha Estándar", "Caminata Vigorosa"]
+            },
+            "ankle": {
+                "avoid": ["Jumping Jacks", "Mountain Climbers", "Estocadas Alternadas"],
+                "prefer": ["Remo con Barra", "Remo Invertido", "Plancha Estándar", "Bicicleta Estática"]
+            },
+            "none": {
+                "avoid": [],
+                "prefer": []
+            }
+        };
+        
+        // Comprehensive exercise database
         this.exercises = {
             chest: {
                 gym: [
                     {
                         name: "Press de Banca con Barra",
-                        description: "Ejercicio fundamental para desarrollo del pecho. Acuéstate en el banco, agarra la barra al ancho de hombros, baja controladamente hasta el pecho y empuja hacia arriba.",
+                        description: "Ejercicio fundamental para desarrollo del pectoral mayor",
                         sets: "3 series de 8-12 repeticiones",
-                        equipment: "Barra y banco",
-                        muscles: "Pectoral Mayor, Tríceps",
-                        link: "https://exrx.net/WeightExercises/PectoralSternal/BBBenchPress",
+                        equipment: "Barra olímpica y banco",
+                        muscles: "Pectoral Mayor, Tríceps, Deltoides Anterior",
+                        link: "https://exrx.net/WeightExercises/PectoralisMajor/BBBenchPress",
                         difficulty: "intermedio",
-                        beginner_tip: "Comienza con barra vacía para dominar la técnica",
-                        advanced_tip: "Puedes añadir peso progresivamente según tu fuerza"
+                        beginner_tip: "Usa siempre un spotter para cargas pesadas",
+                        advanced_tip: "Varía el agarre para trabajar diferentes ángulos"
                     },
                     {
                         name: "Press Inclinado con Mancuernas",
-                        description: "Excelente para el pecho superior. En banco inclinado 30-45°, empuja las mancuernas hacia arriba y ligeramente hacia adentro.",
+                        description: "Excelente para desarrollo del pecho superior",
                         sets: "3 series de 10-15 repeticiones",
-                        equipment: "Mancuernas y banco inclinado",
-                        muscles: "Pectoral Superior, Deltoides",
-                        link: "https://exrx.net/WeightExercises/DeltoidAnterior/DBShoulderPress",
+                        equipment: "Par de mancuernas y banco inclinado (30-45°)",
+                        muscles: "Pectoral Mayor (fibras superiores), Deltoides Anterior",
+                        link: "https://exrx.net/WeightExercises/PectoralisMajor/DBInclinePress",
                         difficulty: "principiante-intermedio",
-                        beginner_tip: "Usa mancuernas ligeras al principio",
-                        advanced_tip: "Controla bien el descenso para mayor activación"
-                    },
-                    {
-                        name: "Aperturas con Mancuernas",
-                        description: "Ejercicio de aislamiento para el pecho. Con ligera flexión en codos, baja las mancuernas en arco hasta sentir estiramiento.",
-                        sets: "3 series de 12-15 repeticiones",
-                        equipment: "Mancuernas y banco",
-                        muscles: "Pectoral Mayor",
-                        link: "https://exrx.net/WeightExercises/PectoralSternal/DBFly",
-                        difficulty: "intermedio",
-                        beginner_tip: "Peso ligero y movimiento controlado",
-                        advanced_tip: "Enfócate en la contracción al subir"
+                        beginner_tip: "Comienza con peso ligero para dominar el patrón",
+                        advanced_tip: "Enfócate en la contracción al final del movimiento"
                     }
                 ],
                 home: [
                     {
-                        name: "Flexiones de Brazos",
-                        description: "Ejercicio clásico de peso corporal. En posición de plancha, baja el pecho hasta casi tocar el suelo manteniendo el cuerpo recto.",
+                        name: "Flexiones de Brazos Estándar",
+                        description: "Ejercicio funcional fundamental para fuerza del tren superior",
                         sets: "3 series de 8-20 repeticiones",
-                        equipment: "Peso corporal",
-                        muscles: "Pectoral Mayor, Tríceps, Core",
-                        link: "https://exrx.net/WeightExercises/PectoralSternal/BWPushup",
+                        equipment: "Peso corporal solamente",
+                        muscles: "Pectoral Mayor, Tríceps, Deltoides Anterior, Core",
+                        link: "https://exrx.net/WeightExercises/PectoralisMajor/BWPushup",
                         difficulty: "principiante-intermedio",
-                        beginner_tip: "Comienza de rodillas si es muy difícil",
-                        advanced_tip: "Prueba variaciones como flexiones diamante",
-                        progressions: ["Flexiones de pared", "Flexiones inclinadas", "Flexiones de rodillas", "Flexiones completas"]
+                        beginner_tip: "Comienza con rodillas apoyadas si es necesario",
+                        advanced_tip: "Varía la posición de las manos para diferentes énfasis"
                     },
                     {
                         name: "Flexiones Diamante",
-                        description: "Flexiones con manos formando diamante. Mantén codos cerca del cuerpo, baja hasta tocar las manos con el pecho.",
+                        description: "Variante avanzada que enfatiza el desarrollo de tríceps",
                         sets: "3 series de 5-12 repeticiones",
                         equipment: "Peso corporal",
-                        muscles: "Tríceps, Pectoral Centro",
-                        link: "https://exrx.net/WeightExercises/Triceps/BWTrianglePushup",
+                        muscles: "Tríceps, Pectoral Mayor (centro), Deltoides Anterior",
+                        link: "https://exrx.net/WeightExercises/Triceps/BWDiamondPushup",
                         difficulty: "intermedio-avanzado",
                         beginner_tip: "Domina flexiones regulares primero",
-                        advanced_tip: "Variación excelente para tríceps"
+                        advanced_tip: "Controla la fase excéntrica para mayor activación"
                     }
                 ]
             },
@@ -87,123 +90,99 @@ fetch('injury_adaptations.json')
                 gym: [
                     {
                         name: "Sentadilla con Barra",
-                        description: "El rey de los ejercicios de piernas. Con la barra en la espalda alta, desciende como sentándote hasta que muslos estén paralelos.",
+                        description: "El ejercicio rey para desarrollo de miembros inferiores",
                         sets: "3 series de 6-12 repeticiones",
-                        equipment: "Barra y rack",
-                        muscles: "Cuádriceps, Glúteos, Isquiotibiales",
+                        equipment: "Barra olímpica y rack de sentadillas",
+                        muscles: "Cuádriceps, Glúteo Mayor, Isquiotibiales, Core",
                         link: "https://exrx.net/WeightExercises/GluteusMaximus/BBSquat",
                         difficulty: "intermedio-avanzado",
-                        beginner_tip: "Aprende la técnica con barra vacía o goblet squat",
-                        advanced_tip: "Ejercicio fundamental para fuerza y masa muscular"
+                        beginner_tip: "Aprende la técnica sin peso primero",
+                        advanced_tip: "Varía la profundidad según tus objetivos"
                     },
                     {
                         name: "Peso Muerto Rumano",
-                        description: "Patrón de bisagra de cadera. Empuja caderas hacia atrás, baja la barra manteniendo piernas casi rectas hasta sentir estiramiento.",
+                        description: "Fundamental para la cadena posterior",
                         sets: "3 series de 8-12 repeticiones",
-                        equipment: "Barra o mancuernas",
-                        muscles: "Isquiotibiales, Glúteos, Espalda Baja",
-                        link: "https://exrx.net/WeightExercises/Hamstrings/BBRomanianDeadlift",
+                        equipment: "Barra olímpica o mancuernas",
+                        muscles: "Isquiotibiales, Glúteo Mayor, Erector Espinal",
+                        link: "https://exrx.net/WeightExercises/GluteusMaximus/BBRomanianDeadlift",
                         difficulty: "intermedio",
-                        beginner_tip: "Practica el movimiento sin peso primero",
-                        advanced_tip: "Excelente para cadena posterior"
-                    },
-                    {
-                        name: "Prensa de Piernas",
-                        description: "Ejercicio seguro para piernas. Pies en plataforma al ancho de hombros, baja hasta 90° y empuja hacia arriba.",
-                        sets: "3 series de 10-15 repeticiones",
-                        equipment: "Máquina prensa",
-                        muscles: "Cuádriceps, Glúteos",
-                        link: "https://exrx.net/WeightExercises/Quadriceps/LVSeatedLegPress",
-                        difficulty: "principiante-intermedio",
-                        beginner_tip: "Ajusta bien el asiento y comienza con peso ligero",
-                        advanced_tip: "Buena alternativa a sentadillas para volumen"
+                        beginner_tip: "Enfócate en empujar las caderas hacia atrás",
+                        advanced_tip: "Mantén la barra muy cerca del cuerpo"
                     }
                 ],
                 home: [
                     {
                         name: "Sentadilla Corporal",
-                        description: "Movimiento fundamental. Pies al ancho de hombros, baja como sentándote en una silla invisible, mantén pecho alto.",
+                        description: "Movimiento funcional fundamental y seguro",
                         sets: "3 series de 12-25 repeticiones",
-                        equipment: "Peso corporal",
-                        muscles: "Cuádriceps, Glúteos, Pantorrillas",
+                        equipment: "Peso corporal solamente",
+                        muscles: "Cuádriceps, Glúteos, Isquiotibiales, Pantorrillas",
                         link: "https://exrx.net/WeightExercises/GluteusMaximus/BWSquat",
                         difficulty: "principiante",
-                        beginner_tip: "Usa una silla real como referencia al principio",
-                        advanced_tip: "Puedes añadir saltos o hacer más repeticiones",
-                        progressions: ["Sentadilla asistida", "Sentadilla parcial", "Sentadilla completa", "Sentadilla con salto"]
+                        beginner_tip: "Usa una silla como guía para la profundidad",
+                        advanced_tip: "Añade pausa en la posición inferior"
                     },
                     {
                         name: "Estocadas Alternadas",
-                        description: "Da paso largo adelante, baja hasta ambas rodillas en 90°. Rodilla trasera casi toca suelo. Regresa y alterna.",
+                        description: "Excelente para equilibrio y corrección de desequilibrios",
                         sets: "3 series de 10-15 por pierna",
                         equipment: "Peso corporal",
-                        muscles: "Cuádriceps, Glúteos, Estabilizadores",
+                        muscles: "Cuádriceps, Glúteos, Isquiotibiales, Estabilizadores",
                         link: "https://exrx.net/WeightExercises/GluteusMaximus/BWLunge",
                         difficulty: "principiante-intermedio",
                         beginner_tip: "Usa pared para equilibrio si es necesario",
-                        advanced_tip: "Excelente para equilibrio y fuerza unilateral"
+                        advanced_tip: "Enfócate en la activación del glúteo"
                     }
                 ]
             },
             back: {
                 gym: [
                     {
+                        name: "Remo con Barra",
+                        description: "Fundamental para fuerza de tracción",
+                        sets: "3 series de 6-12 repeticiones",
+                        equipment: "Barra olímpica",
+                        muscles: "Dorsal Ancho, Romboides, Trapecio Medio",
+                        link: "https://exrx.net/WeightExercises/BackGeneral/BBBentOverRow",
+                        difficulty: "intermedio",
+                        beginner_tip: "Mantén la espalda recta durante todo el movimiento",
+                        advanced_tip: "Aprieta los omóplatos al final del movimiento"
+                    },
+                    {
                         name: "Dominadas",
-                        description: "Ejercicio supremo de espalda. Cuelga con brazos extendidos, tira hasta que mentón pase la barra. Baja controladamente.",
+                        description: "Ejercicio compuesto supremo para la espalda",
                         sets: "3 series de 5-12 repeticiones",
-                        equipment: "Barra dominadas",
-                        muscles: "Dorsal Ancho, Bíceps, Romboides",
+                        equipment: "Barra de dominadas",
+                        muscles: "Dorsal Ancho, Romboides, Trapecio Medio, Bíceps",
                         link: "https://exrx.net/WeightExercises/LatissimusDorsi/BWPullup",
                         difficulty: "intermedio-avanzado",
                         beginner_tip: "Usa banda elástica o máquina asistida",
-                        advanced_tip: "Ejercicio rey para desarrollo de espalda"
-                    },
-                    {
-                        name: "Remo con Barra",
-                        description: "Inclinado 45°, tira barra hacia abdomen bajo. Aprieta omóplatos al final. Espalda recta siempre.",
-                        sets: "3 series de 6-12 repeticiones",
-                        equipment: "Barra olímpica",
-                        muscles: "Dorsal, Romboides, Trapecio Medio",
-                        link: "https://exrx.net/WeightExercises/BackGeneral/BBBentOverRow",
-                        difficulty: "intermedio",
-                        beginner_tip: "Comienza con peso ligero para dominar técnica",
-                        advanced_tip: "Fundamental para espalda fuerte y postura"
-                    },
-                    {
-                        name: "Jalones al Pecho",
-                        description: "Sentado, tira barra hacia pecho superior. Codos hacia abajo y atrás. Nunca detrás del cuello.",
-                        sets: "3 series de 8-12 repeticiones",
-                        equipment: "Máquina jalones",
-                        muscles: "Dorsal Ancho, Bíceps",
-                        link: "https://exrx.net/WeightExercises/LatissimusDorsi/CBFrontPulldown",
-                        difficulty: "principiante-intermedio",
-                        beginner_tip: "Buena preparación para dominadas futuras",
-                        advanced_tip: "Enfócate en activar los dorsales, no solo los brazos"
+                        advanced_tip: "Controla la fase negativa"
                     }
                 ],
                 home: [
                     {
                         name: "Remo Invertido",
-                        description: "Debajo de mesa resistente, agarra borde, tira cuerpo hacia arriba manteniendo línea recta. Aprieta omóplatos.",
+                        description: "Excelente alternativa casera a dominadas",
                         sets: "3 series de 8-15 repeticiones",
-                        equipment: "Mesa resistente",
-                        muscles: "Dorsal, Romboides, Bíceps",
+                        equipment: "Mesa resistente o barra baja",
+                        muscles: "Dorsal Ancho, Romboides, Trapecio Medio, Bíceps",
                         link: "https://exrx.net/WeightExercises/BackGeneral/BWSupineRow",
                         difficulty: "principiante-intermedio",
                         beginner_tip: "Asegúrate de que la mesa sea muy resistente",
-                        advanced_tip: "Excelente alternativa casera a remos",
-                        progressions: ["Remo con rodillas flexionadas", "Remo piernas extendidas", "Remo pies elevados"]
+                        advanced_tip: "Eleva los pies para mayor dificultad"
                     },
                     {
                         name: "Superman",
-                        description: "Boca abajo, levanta brazos, pecho y piernas simultáneamente. Mantén 1-2 segundos, baja controladamente.",
+                        description: "Seguro para fortalecimiento de espalda baja",
                         sets: "3 series de 12-20 repeticiones",
-                        equipment: "Peso corporal",
-                        muscles: "Erector Espinal, Glúteos",
+                        equipment: "Peso corporal, colchoneta opcional",
+                        muscles: "Erector Espinal, Glúteos, Deltoides Posterior",
                         link: "https://exrx.net/WeightExercises/ErectorSpinae/BWSuperman",
                         difficulty: "principiante",
                         beginner_tip: "Comienza con movimientos pequeños",
-                        advanced_tip: "Excelente para fortalecimiento de espalda baja"
+                        advanced_tip: "Mantén la contracción 2-3 segundos"
                     }
                 ]
             },
@@ -211,49 +190,38 @@ fetch('injury_adaptations.json')
                 gym: [
                     {
                         name: "Curl de Bíceps con Barra",
-                        description: "De pie, flexiona codos llevando barra hacia hombros. Codos fijos a los lados, no balancees el torso.",
+                        description: "Ejercicio básico para desarrollo de bíceps",
                         sets: "3 series de 8-12 repeticiones",
-                        equipment: "Barra recta o W",
-                        muscles: "Bíceps Braquial",
+                        equipment: "Barra recta o barra W",
+                        muscles: "Bíceps Braquial, Braquial Anterior",
                         link: "https://exrx.net/WeightExercises/Biceps/BBCurl",
                         difficulty: "principiante-intermedio",
-                        beginner_tip: "Peso moderado y movimiento controlado",
-                        advanced_tip: "Ejercicio básico efectivo para bíceps"
+                        beginner_tip: "Mantén los codos fijos a los lados",
+                        advanced_tip: "Controla la fase negativa"
                     },
                     {
                         name: "Press Francés",
-                        description: "Acostado, baja barra hacia frente flexionando solo codos. Extiende brazos regresando a posición inicial.",
+                        description: "Efectivo para desarrollo completo del tríceps",
                         sets: "3 series de 8-12 repeticiones",
-                        equipment: "Barra W, banco",
-                        muscles: "Tríceps Braquial",
+                        equipment: "Barra W o recta, banco plano",
+                        muscles: "Tríceps Braquial (las 3 porciones)",
                         link: "https://exrx.net/WeightExercises/Triceps/BBLyingTriExt",
                         difficulty: "intermedio",
                         beginner_tip: "Usa barra W para menos estrés en muñecas",
-                        advanced_tip: "Excelente para desarrollo de tríceps"
+                        advanced_tip: "Mantén los codos fijos"
                     }
                 ],
                 home: [
                     {
-                        name: "Flexiones Diamante",
-                        description: "Manos formando diamante, codos cerca del cuerpo, baja hasta tocar manos con pecho.",
-                        sets: "3 series de 5-12 repeticiones",
-                        equipment: "Peso corporal",
-                        muscles: "Tríceps, Pectoral",
-                        link: "https://exrx.net/WeightExercises/Triceps/BWTrianglePushup",
-                        difficulty: "intermedio-avanzado",
-                        beginner_tip: "Progresa desde flexiones regulares",
-                        advanced_tip: "Excelente para tríceps sin equipo"
-                    },
-                    {
                         name: "Fondos en Silla",
-                        description: "Espalda a silla, manos en borde, baja cuerpo flexionando codos hasta 90°. Empuja hacia arriba.",
+                        description: "Versión casera segura de fondos para tríceps",
                         sets: "3 series de 8-15 repeticiones",
                         equipment: "Silla resistente",
                         muscles: "Tríceps, Deltoides Anterior",
                         link: "https://exrx.net/WeightExercises/Triceps/BWBenchDip",
                         difficulty: "principiante-intermedio",
-                        beginner_tip: "Silla muy estable, flexiona piernas para facilitar",
-                        advanced_tip: "Extiende piernas para mayor dificultad"
+                        beginner_tip: "Flexiona piernas para reducir dificultad",
+                        advanced_tip: "Extiende piernas para mayor desafío"
                     }
                 ]
             },
@@ -261,39 +229,38 @@ fetch('injury_adaptations.json')
                 gym: [
                     {
                         name: "Press Militar",
-                        description: "De pie, empuja barra desde pecho hasta sobre cabeza en línea recta. Core muy activado.",
+                        description: "Fundamental para desarrollo de hombros",
                         sets: "3 series de 6-10 repeticiones",
                         equipment: "Barra olímpica",
                         muscles: "Deltoides, Tríceps, Core",
                         link: "https://exrx.net/WeightExercises/DeltoidAnterior/BBMilitaryPress",
                         difficulty: "intermedio-avanzado",
-                        beginner_tip: "Domina técnica con peso ligero primero",
-                        advanced_tip: "Ejercicio completo para hombros y core"
+                        beginner_tip: "Domina la técnica con peso ligero",
+                        advanced_tip: "Mantén el core muy activado"
                     },
                     {
                         name: "Elevaciones Laterales",
-                        description: "Levanta mancuernas hacia lados hasta altura de hombros. Codos ligeramente flexionados.",
+                        description: "Específico para anchura de hombros",
                         sets: "3 series de 12-15 repeticiones",
-                        equipment: "Mancuernas ligeras",
-                        muscles: "Deltoides Lateral",
+                        equipment: "Par de mancuernas ligeras",
+                        muscles: "Deltoides Lateral, Deltoides Anterior",
                         link: "https://exrx.net/WeightExercises/DeltoidLateral/DBLateralRaise",
                         difficulty: "principiante",
-                        beginner_tip: "Peso ligero, no levantes más alto que hombros",
-                        advanced_tip: "Excelente para anchura de hombros"
+                        beginner_tip: "Peso ligero a moderado siempre",
+                        advanced_tip: "Controla la fase negativa"
                     }
                 ],
                 home: [
                     {
                         name: "Flexiones Pike",
-                        description: "Posición V invertida, baja cabeza hacia suelo flexionando brazos. Empuja hacia arriba.",
+                        description: "Excelente ejercicio casero para hombros",
                         sets: "3 series de 6-12 repeticiones",
                         equipment: "Peso corporal",
-                        muscles: "Deltoides Anterior, Tríceps",
+                        muscles: "Deltoides Anterior, Tríceps, Core",
                         link: "https://exrx.net/WeightExercises/DeltoidAnterior/BWPikePushup",
                         difficulty: "intermedio",
                         beginner_tip: "Comienza con rango parcial",
-                        advanced_tip: "Progresión hacia flexiones verticales",
-                        progressions: ["Pike pies suelo", "Pike pies elevados", "Flexiones verticales"]
+                        advanced_tip: "Eleva los pies para mayor dificultad"
                     }
                 ]
             },
@@ -301,183 +268,192 @@ fetch('injury_adaptations.json')
                 gym: [
                     {
                         name: "Plancha con Peso",
-                        description: "Posición plancha con peso en espalda. Mantén línea recta perfecta, core contraído.",
+                        description: "Superior para estabilidad del core",
                         sets: "3 series de 20-45 segundos",
                         equipment: "Disco de peso",
-                        muscles: "Core completo",
-                        link: "https://exrx.net/WeightExercises/RectusAbdominis/BWFrontPlank",
+                        muscles: "Recto Abdominal, Transverso, Oblicuos",
+                        link: "https://exrx.net/WeightExercises/RectusAbdominis/WtPlank",
                         difficulty: "intermedio-avanzado",
                         beginner_tip: "Domina plancha sin peso primero",
                         advanced_tip: "Añade peso gradualmente"
                     },
                     {
-                        name: "Abdominales en Polea",
-                        description: "Arrodillado, flexiona tronco hacia abajo contrayendo abdomen. Movimiento desde core, no brazos.",
-                        sets: "3 series de 12-20 repeticiones",
-                        equipment: "Polea alta con cuerda",
+                        name: "Crunch Abdominal",
+                        description: "Básico para desarrollo abdominal",
+                        sets: "3 series de 15-25 repeticiones",
+                        equipment: "Peso corporal",
                         muscles: "Recto Abdominal",
-                        link: "https://exrx.net/WeightExercises/RectusAbdominis/CBKneelingCrunch",
-                        difficulty: "intermedio",
-                        beginner_tip: "Peso ligero, siente trabajo en abdomen",
-                        advanced_tip: "Enfócate en la contracción, no en el peso"
+                        link: "https://exrx.net/WeightExercises/RectusAbdominis/BWCrunch",
+                        difficulty: "principiante",
+                        beginner_tip: "Movimiento controlado, no uses impulso",
+                        advanced_tip: "Mantén tensión constante en abdomen"
                     }
                 ],
                 home: [
                     {
                         name: "Plancha Estándar",
-                        description: "Antebrazos en suelo, cuerpo recto de cabeza a talones. Core contraído, glúteos apretados.",
+                        description: "Fundamental para estabilidad del core",
                         sets: "3 series de 20-60 segundos",
-                        equipment: "Peso corporal",
-                        muscles: "Core completo",
+                        equipment: "Peso corporal, colchoneta opcional",
+                        muscles: "Core completo, Estabilizadores",
                         link: "https://exrx.net/WeightExercises/RectusAbdominis/BWFrontPlank",
                         difficulty: "principiante-intermedio",
                         beginner_tip: "Progresa tiempo gradualmente",
-                        advanced_tip: "Ejercicio fundamental para core",
-                        progressions: ["Plancha rodillas", "Plancha inclinada", "Plancha estándar", "Plancha con elevaciones"]
-                    },
-                    {
-                        name: "Crunch Abdominal",
-                        description: "Acostado, eleva torso flexionando columna. Solo hasta despegar omóplatos. Manos en pecho.",
-                        sets: "3 series de 15-25 repeticiones",
-                        equipment: "Peso corporal",
-                        muscles: "Recto Abdominal",
-                        link: "https://exrx.net/WeightExercises/RectusAbdominis/Crunch",
-                        difficulty: "principiante",
-                        beginner_tip: "No tires del cuello, movimiento controlado",
-                        advanced_tip: "Ejercicio básico efectivo para abdomen"
+                        advanced_tip: "Mantén línea perfecta del cuerpo"
                     },
                     {
                         name: "Bicicleta Abdominal",
-                        description: "Acostado, lleva codo a rodilla opuesta alternadamente. Como pedalear en el aire.",
+                        description: "Efectivo para oblicuos y abdomen",
                         sets: "3 series de 20-30 repeticiones",
-                        equipment: "Peso corporal",
+                        equipment: "Peso corporal, colchoneta",
                         muscles: "Oblicuos, Recto Abdominal",
-                        link: "https://exrx.net/WeightExercises/Obliques/BWTwistingCrunch",
+                        link: "https://exrx.net/WeightExercises/Obliques/BWBicycle",
                         difficulty: "principiante-intermedio",
-                        beginner_tip: "Ritmo controlado, no tires cuello",
-                        advanced_tip: "Excelente para oblicuos y coordinación"
+                        beginner_tip: "Ritmo controlado, no muy rápido",
+                        advanced_tip: "Enfócate en la rotación del torso"
                     }
                 ]
             },
             cardio: {
                 gym: [
                     {
-                        name: "Cinta de Correr",
-                        description: "Alterna períodos moderados con intensos. Ej: 2 min caminar rápido, 1 min trotar.",
-                        sets: "20-30 minutos",
-                        equipment: "Cinta de correr",
-                        muscles: "Sistema cardiovascular",
-                        link: "https://exrx.net/Aerobic/Exercises/TreadmillWalkSP",
-                        difficulty: "principiante-intermedio",
-                        beginner_tip: "Comienza caminando, usa clip seguridad",
-                        advanced_tip: "Varía velocidad e inclinación"
-                    },
-                    {
                         name: "Bicicleta Estática",
-                        description: "Pedaleo constante con variaciones de intensidad. Asiento bien ajustado.",
+                        description: "Cardiovascular de bajo impacto",
                         sets: "20-30 minutos",
                         equipment: "Bicicleta estática",
-                        muscles: "Sistema cardiovascular, Piernas",
+                        muscles: "Sistema cardiovascular, Cuádriceps, Glúteos",
                         link: "https://exrx.net/Aerobic/Exercises/Cycling",
                         difficulty: "principiante",
-                        beginner_tip: "Asiento altura correcta, resistencia baja",
-                        advanced_tip: "Ejercicio de bajo impacto excelente"
+                        beginner_tip: "Ajuste profesional del asiento",
+                        advanced_tip: "Varía la resistencia por intervalos"
+                    },
+                    {
+                        name: "Cinta de Correr",
+                        description: "Cardiovascular fundamental",
+                        sets: "20-30 minutos",
+                        equipment: "Cinta de correr",
+                        muscles: "Sistema cardiovascular, Piernas completas",
+                        link: "https://exrx.net/Aerobic/Exercises/Treadmill",
+                        difficulty: "principiante-intermedio",
+                        beginner_tip: "Comienza con caminata",
+                        advanced_tip: "Incorpora intervalos de intensidad"
                     }
                 ],
                 home: [
                     {
                         name: "Jumping Jacks",
-                        description: "Salta separando piernas y elevando brazos sobre cabeza. Regresa saltando a posición inicial.",
+                        description: "Pliométrico para acondicionamiento",
                         sets: "3 series de 30-60 segundos",
                         equipment: "Peso corporal",
-                        muscles: "Sistema cardiovascular",
-                        link: "https://exrx.net/WeightExercises/Cardio/BWJumpingJack",
+                        muscles: "Sistema cardiovascular, Piernas, Hombros",
+                        link: "https://exrx.net/WeightExercises/Cardiovascular/BWJumpingJack",
                         difficulty: "principiante-intermedio",
-                        beginner_tip: "Aterrizaje suave, superficie apropiada",
-                        advanced_tip: "Ejercicio cardiovascular clásico y efectivo"
+                        beginner_tip: "Superficie apropiada para saltar",
+                        advanced_tip: "Mantén ritmo constante"
                     },
                     {
                         name: "Mountain Climbers",
-                        description: "Posición plancha, alterna llevando rodillas al pecho rápidamente. Como correr en plancha.",
+                        description: "Alta intensidad, múltiples grupos musculares",
                         sets: "3 series de 20-30 segundos",
                         equipment: "Peso corporal",
-                        muscles: "Cardio, Core, Hombros",
-                        link: "https://exrx.net/WeightExercises/HipFlexors/BWMountainClimber",
+                        muscles: "Sistema cardiovascular, Core, Hombros",
+                        link: "https://exrx.net/WeightExercises/Cardiovascular/BWMountainClimber",
                         difficulty: "intermedio",
-                        beginner_tip: "Mantén posición plancha, domina plancha primero",
-                        advanced_tip: "Excelente combinación cardio-fuerza"
+                        beginner_tip: "Domina plancha primero",
+                        advanced_tip: "Mantén posición de plancha perfecta"
                     },
                     {
                         name: "Caminata Vigorosa",
-                        description: "Caminar a paso firme donde puedas hablar pero sientes que trabajas. Postura erguida.",
+                        description: "Cardio suave y accesible",
                         sets: "20-45 minutos",
                         equipment: "Ninguno",
                         muscles: "Sistema cardiovascular, Piernas",
                         link: "https://exrx.net/Aerobic/Exercises/Walking",
                         difficulty: "principiante",
-                        beginner_tip: "Calzado apropiado, ruta segura",
-                        advanced_tip: "Base perfecta para cualquier nivel de fitness"
+                        beginner_tip: "Comienza con 10-15 minutos",
+                        advanced_tip: "Añade inclinaciones o intervalos"
                     }
                 ]
             }
         };
 
-        // Rest of the code remains the same...
-        this.timeMapping = {
-            "15-30": { exercisesPerMuscle: 1, totalRange: "4-6 ejercicios" },
-            "30-45": { exercisesPerMuscle: 2, totalRange: "6-8 ejercicios" },
-            "45-60": { exercisesPerMuscle: 2, totalRange: "8-12 ejercicios" },
-            "60+": { exercisesPerMuscle: 3, totalRange: "12-16 ejercicios" }
-        };
-
-        this.goalInfo = {
-            health: { focus: "Salud general y bienestar", rest: "60-90 segundos" },
-            strength: { focus: "Desarrollo de fuerza máxima", rest: "2-3 minutos" },
-            muscle: { focus: "Ganancia de masa muscular", rest: "60-90 segundos" },
-            weight_loss: { focus: "Pérdida de peso y definición", rest: "30-60 segundos" }
+        // Time-based routine structure
+        this.routineTimeStructures = {
+            "15-30": {
+                total_exercises: [4, 6],
+                exercises_per_zone: 1,
+                warm_up: "3-5 minutos",
+                main_workout: "10-20 minutos",
+                cool_down: "2-5 minutos",
+                structure: "1 ejercicio básico por zona seleccionada"
+            },
+            "30-45": {
+                total_exercises: [6, 8],
+                exercises_per_zone: [1, 2],
+                warm_up: "5-8 minutos",
+                main_workout: "20-30 minutos",
+                cool_down: "5-7 minutos",
+                structure: "1-2 ejercicios por zona, priorizando básicos"
+            },
+            "45-60": {
+                total_exercises: [8, 12],
+                exercises_per_zone: 2,
+                warm_up: "8-10 minutos",
+                main_workout: "35-45 minutos",
+                cool_down: "7-10 minutos",
+                structure: "2 ejercicios por zona (1 básico + 1 auxiliar)"
+            },
+            "60+": {
+                total_exercises: [12, 16],
+                exercises_per_zone: [2, 3],
+                warm_up: "10-15 minutos",
+                main_workout: "45-60 minutos",
+                cool_down: "10-15 minutos",
+                structure: "2-3 ejercicios por zona con variaciones"
+            }
         };
 
         this.init();
     }
 
-    // All other methods remain exactly the same...
     init() {
-        this.setupMuscleSelection();
-        this.setupPersonalForm();
+        this.setupZoneSelection();
+        this.setupAssessmentForm();
         this.setupLocationSelection();
+        this.setupInjurySelection();
+        this.setupMedicalClearance();
         this.setupNavigation();
         this.showStep(1);
-    
-    this.setupInjurySelection();}
+    }
 
-    setupMuscleSelection() {
-        const muscleButtons = document.querySelectorAll('.muscle-button');
-        muscleButtons.forEach(button => {
+    setupZoneSelection() {
+        const zoneButtons = document.querySelectorAll('.zone-button');
+        zoneButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const muscle = button.getAttribute('data-muscle');
-                this.toggleMuscle(muscle, button);
+                const zone = button.getAttribute('data-zone');
+                this.toggleZone(zone, button);
             });
         });
     }
 
-    toggleMuscle(muscle, button) {
-        if (this.selectedMuscles.has(muscle)) {
-            this.selectedMuscles.delete(muscle);
+    toggleZone(zone, button) {
+        if (this.selectedZones.has(zone)) {
+            this.selectedZones.delete(zone);
             button.classList.remove('selected');
         } else {
-            this.selectedMuscles.add(muscle);
+            this.selectedZones.add(zone);
             button.classList.add('selected');
         }
         
-        this.updateSelectedMusclesList();
+        this.updateSelectedZonesList();
         this.updateContinueButton();
     }
 
-    updateSelectedMusclesList() {
+    updateSelectedZonesList() {
         const listElement = document.getElementById('selected-list');
-        const muscleNames = {
+        const zoneNames = {
             chest: "Pecho",
-            legs: "Piernas", 
+            legs: "Piernas",
             back: "Espalda",
             arms: "Brazos",
             shoulders: "Hombros",
@@ -485,14 +461,14 @@ fetch('injury_adaptations.json')
             cardio: "Cardio"
         };
         
-        if (this.selectedMuscles.size === 0) {
+        if (this.selectedZones.size === 0) {
             listElement.textContent = 'Ningún grupo muscular seleccionado';
             return;
         }
 
-        const selectedNames = Array.from(this.selectedMuscles).map(muscle => {
-            const name = muscleNames[muscle] || muscle;
-            return `<span class="selected-muscle-tag">${name}</span>`;
+        const selectedNames = Array.from(this.selectedZones).map(zone => {
+            const name = zoneNames[zone] || zone;
+            return `<span class="selected-zone-tag">${name}</span>`;
         });
 
         listElement.innerHTML = selectedNames.join(' ');
@@ -500,19 +476,71 @@ fetch('injury_adaptations.json')
 
     updateContinueButton() {
         const continueButton = document.getElementById('continue-step1');
-        continueButton.disabled = this.selectedMuscles.size === 0;
+        continueButton.disabled = this.selectedZones.size === 0;
     }
 
-    setupPersonalForm() {
-        const fields = ['age', 'experience', 'goal', 'time'];
-        fields.forEach(fieldId => {
+    setupAssessmentForm() {
+        const requiredFields = ['age', 'sex', 'height', 'weight', 'activity-level', 'available-time'];
+        
+        requiredFields.forEach(fieldId => {
             const field = document.getElementById(fieldId);
             if (field) {
-                field.addEventListener('change', () => {
-                    this.userInfo[fieldId] = field.value;
-                });
+                field.addEventListener('change', () => this.validateAssessmentForm());
+                field.addEventListener('input', () => this.validateAssessmentForm());
             }
         });
+
+        const conditionCheckboxes = document.querySelectorAll('input[name="conditions"]');
+        conditionCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                if (e.target.value === 'ninguna' && e.target.checked) {
+                    conditionCheckboxes.forEach(cb => {
+                        if (cb.value !== 'ninguna') cb.checked = false;
+                    });
+                } else if (e.target.value !== 'ninguna' && e.target.checked) {
+                    const ningunaBox = document.querySelector('input[name="conditions"][value="ninguna"]');
+                    if (ningunaBox) ningunaBox.checked = false;
+                }
+            });
+        });
+    }
+
+    validateAssessmentForm() {
+        const requiredFields = ['age', 'sex', 'height', 'weight', 'activity-level', 'available-time'];
+        const continueButton = document.getElementById('continue-step2');
+        
+        const allValid = requiredFields.every(fieldId => {
+            const field = document.getElementById(fieldId);
+            return field && field.value.trim() !== '';
+        });
+
+        continueButton.disabled = !allValid;
+    }
+
+    collectAssessmentData() {
+        this.userAssessment = {
+            age: parseInt(document.getElementById('age').value),
+            sex: document.getElementById('sex').value,
+            height: parseInt(document.getElementById('height').value),
+            weight: parseInt(document.getElementById('weight').value),
+            activity_level: document.getElementById('activity-level').value,
+            experience: document.getElementById('experience').value || 'beginner',
+            primary_goal: document.getElementById('primary-goal').value || 'general_health',
+            available_time: document.getElementById('available-time').value,
+            frequency: document.getElementById('frequency').value || '3',
+            conditions: Array.from(document.querySelectorAll('input[name="conditions"]:checked')).map(cb => cb.value)
+        };
+
+        const heightM = this.userAssessment.height / 100;
+        this.userAssessment.bmi = (this.userAssessment.weight / (heightM * heightM)).toFixed(1);
+        this.userAssessment.age_group = this.getAgeGroup(this.userAssessment.age);
+    }
+
+    getAgeGroup(age) {
+        if (age >= 18 && age <= 39) return "18-39";
+        if (age >= 40 && age <= 64) return "40-64";
+        if (age >= 65) return "65+";
+        return "18-39";
     }
 
     setupLocationSelection() {
@@ -529,9 +557,115 @@ fetch('injury_adaptations.json')
         document.querySelectorAll('.location-button').forEach(btn => {
             btn.classList.remove('selected');
         });
+
         button.classList.add('selected');
         this.location = location;
         document.getElementById('continue-step3').disabled = false;
+    }
+
+    setupInjurySelection() {
+        const injuryButtons = document.querySelectorAll('.injury-button');
+        injuryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                injuryButtons.forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
+                this.injury = button.getAttribute('data-injury');
+                console.log('Injury selected:', this.injury);
+                document.getElementById('continue-step4').disabled = false;
+            });
+        });
+    }
+
+    getExercisesForMuscle(muscle, count) {
+        const muscleData = this.exercises[muscle];
+        if (!muscleData) return [];
+        
+        let exerciseList = this.location === 'home' ? muscleData.home : muscleData.gym;
+        if (!exerciseList || exerciseList.length === 0) return [];
+        
+        // Apply injury filtering
+        if (this.injury && this.injury !== 'none') {
+            const adaptations = this.injuryAdaptations[this.injury] || {};
+            const avoidList = adaptations.avoid || [];
+            const preferList = adaptations.prefer || [];
+            
+            console.log(`Filtering for injury: ${this.injury}`);
+            console.log('Avoiding:', avoidList);
+            
+            // Filter out avoided exercises
+            exerciseList = exerciseList.filter(ex => {
+                const shouldAvoid = avoidList.some(term => 
+                    ex.name.toLowerCase().includes(term.toLowerCase())
+                );
+                return !shouldAvoid;
+            });
+            
+            console.log(`After filtering: ${exerciseList.length} exercises`);
+            
+            // Add injury modifications to remaining exercises
+            exerciseList = exerciseList.map(ex => ({
+                ...ex,
+                equipment: ex.equipment + " (adaptado para lesión)",
+                injury_adapted: true,
+                sets: ex.sets.replace(/\d+(-\d+)?/, "2-3") // Reduce intensity
+            }));
+            
+            // If too few exercises after filtering, add alternatives
+            if (exerciseList.length < count && preferList.length > 0) {
+                const altExercises = preferList.slice(0, count - exerciseList.length).map(name => ({
+                    name: name,
+                    description: "Ejercicio alternativo seguro recomendado para tu lesión.",
+                    sets: "2-3 series de 10-15 repeticiones",
+                    equipment: "Peso corporal o bajo impacto",
+                    muscles: "Adaptado por lesión",
+                    link: "https://exrx.net",
+                    difficulty: "bajo impacto",
+                    beginner_tip: "Realiza con cuidado y para si sientes dolor",
+                    advanced_tip: "Progresa muy gradualmente",
+                    injury_alternative: true
+                }));
+                exerciseList = exerciseList.concat(altExercises);
+            }
+        }
+        
+        const shuffled = [...exerciseList].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, Math.min(count, shuffled.length));
+    }
+
+    setupMedicalClearance() {
+        const clearanceCheckboxes = document.querySelectorAll('input[name="medical-clearance"]');
+        const proceedButton = document.getElementById('proceed-with-clearance');
+        
+        clearanceCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                clearanceCheckboxes.forEach(cb => {
+                    if (cb !== e.target) cb.checked = false;
+                });
+                
+                if (e.target.checked) {
+                    this.medicalClearanceType = e.target.value;
+                    proceedButton.disabled = false;
+                } else {
+                    this.medicalClearanceType = null;
+                    proceedButton.disabled = true;
+                }
+            });
+        });
+
+        proceedButton.addEventListener('click', () => {
+            this.bypassEnabled = true;
+            this.showPrescriptionWithBypass();
+        });
+    }
+
+    showPrescriptionWithBypass() {
+        document.getElementById('medical-clearance').classList.add('hidden');
+        
+        document.getElementById('prescription-summary').classList.remove('hidden');
+        document.getElementById('routine-structure').classList.remove('hidden');
+        document.getElementById('exercises-section').classList.remove('hidden');
+        document.getElementById('progression-guidelines').classList.remove('hidden');
+        document.getElementById('routine-footer').classList.remove('hidden');
     }
 
     setupNavigation() {
@@ -544,6 +678,7 @@ fetch('injury_adaptations.json')
         });
         
         document.getElementById('continue-step2').addEventListener('click', () => {
+            this.collectAssessmentData();
             this.showStep(3);
         });
 
@@ -552,8 +687,16 @@ fetch('injury_adaptations.json')
         });
         
         document.getElementById('continue-step3').addEventListener('click', () => {
-            this.generateRoutine();
             this.showStep(4);
+        });
+
+        document.getElementById('back-step4').addEventListener('click', () => {
+            this.showStep(3);
+        });
+        
+        document.getElementById('continue-step4').addEventListener('click', () => {
+            this.generateFullRoutine();
+            this.showStep(5);
         });
 
         document.getElementById('restart').addEventListener('click', () => {
@@ -565,126 +708,204 @@ fetch('injury_adaptations.json')
         document.querySelectorAll('.step-section').forEach(step => {
             step.classList.add('hidden');
         });
+        
         document.getElementById(`step${stepNumber}`).classList.remove('hidden');
         this.currentStep = stepNumber;
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    generateRoutine() {
-        this.displayRoutineSummary();
-        this.displayExercises();
+    generateFullRoutine() {
+        this.createRoutineStructure();
+        this.createFullExercisePrescription();
+        this.createProgressionGuidelines();
+        
+        document.getElementById('prescription-summary').classList.remove('hidden');
+        document.getElementById('routine-structure').classList.remove('hidden');
+        document.getElementById('exercises-section').classList.remove('hidden');
+        document.getElementById('progression-guidelines').classList.remove('hidden');
+        document.getElementById('routine-footer').classList.remove('hidden');
     }
 
-    displayRoutineSummary() {
-        const summarySection = document.getElementById('routine-summary');
-        const summaryInfo = document.getElementById('summary-info');
-        const timeInfo = this.timeMapping[this.userInfo.time] || this.timeMapping["30-45"];
-        const goalInfo = this.goalInfo[this.userInfo.goal] || this.goalInfo.health;
+    createRoutineStructure() {
+        const routineBreakdown = document.getElementById('routine-breakdown');
+        const timeStructure = this.routineTimeStructures[this.userAssessment.available_time];
         
-        summaryInfo.innerHTML = `
-            <div class="summary-grid">
-                <div class="summary-item">
-                    <div class="summary-label">Grupos Musculares</div>
-                    <div class="summary-value">${this.selectedMuscles.size}</div>
+        routineBreakdown.innerHTML = `
+            <div class="routine-phase">
+                <div class="routine-phase-title">🔥 Calentamiento</div>
+                <div class="routine-phase-time">${timeStructure.warm_up}</div>
+                <div class="routine-phase-description">Movilidad articular y activación progresiva</div>
+            </div>
+            <div class="routine-phase">
+                <div class="routine-phase-title">💪 Entrenamiento Principal</div>
+                <div class="routine-phase-time">${timeStructure.main_workout}</div>
+                <div class="routine-phase-description">${timeStructure.structure}</div>
+            </div>
+            <div class="routine-phase">
+                <div class="routine-phase-title">🧘 Enfriamiento</div>
+                <div class="routine-phase-time">${timeStructure.cool_down}</div>
+                <div class="routine-phase-description">Estiramientos y relajación</div>
+            </div>
+        `;
+    }
+
+    createFullExercisePrescription() {
+        this.displayUserProfile();
+        this.displayFullExerciseRoutine();
+    }
+
+    displayUserProfile() {
+        const userProfile = document.getElementById('user-profile');
+        
+        const injuryStatus = this.injury === 'none' ? 'Sin lesiones' : 
+            this.injury === 'knee' ? 'Lesión de rodilla' :
+            this.injury === 'shoulder' ? 'Lesión de hombro' :
+            this.injury === 'lowerback' ? 'Lesión espalda baja' :
+            this.injury === 'ankle' ? 'Lesión de tobillo' : 'Desconocida';
+        
+        userProfile.innerHTML = `
+            <div class="user-profile-grid">
+                <div class="profile-item">
+                    <div class="profile-label">Edad</div>
+                    <div class="profile-value">${this.userAssessment.age} años</div>
                 </div>
-                <div class="summary-item">
-                    <div class="summary-label">Ubicación</div>
-                    <div class="summary-value">${this.location === 'home' ? 'Casa' : 'Gimnasio'}</div>
+                <div class="profile-item">
+                    <div class="profile-label">IMC</div>
+                    <div class="profile-value">${this.userAssessment.bmi}</div>
                 </div>
-                <div class="summary-item">
-                    <div class="summary-label">Tiempo Estimado</div>
-                    <div class="summary-value">${this.userInfo.time || '30-45 min'}</div>
+                <div class="profile-item">
+                    <div class="profile-label">Ubicación</div>
+                    <div class="profile-value">${this.location === 'home' ? 'Casa' : 'Gimnasio'}</div>
                 </div>
-                <div class="summary-item">
-                    <div class="summary-label">Ejercicios Totales</div>
-                    <div class="summary-value">${timeInfo.totalRange}</div>
+                <div class="profile-item">
+                    <div class="profile-label">Estado de Lesión</div>
+                    <div class="profile-value">${injuryStatus}</div>
                 </div>
-                <div class="summary-item">
-                    <div class="summary-label">Experiencia</div>
-                    <div class="summary-value">${this.userInfo.experience || 'General'}</div>
+                <div class="profile-item">
+                    <div class="profile-label">Tiempo por Sesión</div>
+                    <div class="profile-value">${this.userAssessment.available_time} minutos</div>
                 </div>
-                <div class="summary-item">
-                    <div class="summary-label">Objetivo</div>
-                    <div class="summary-value">${goalInfo.focus}</div>
+                <div class="profile-item">
+                    <div class="profile-label">Grupos Musculares</div>
+                    <div class="profile-value">${this.selectedZones.size} zonas</div>
                 </div>
             </div>
-            ${goalInfo.rest ? `<p style="text-align: center; margin-top: var(--space-16); color: var(--color-text-secondary);">
-                <strong>Descanso recomendado:</strong> ${goalInfo.rest} entre series
-            </p>` : ''}
         `;
-        summarySection.classList.remove('hidden');
     }
 
-    displayExercises() {
-        const exercisesContainer = document.getElementById('exercises-container');
+    displayFullExerciseRoutine() {
+        const exercisesList = document.getElementById('exercises-list');
+        const timeStructure = this.routineTimeStructures[this.userAssessment.available_time];
         let exercisesHTML = '';
-        const timeInfo = this.timeMapping[this.userInfo.time] || this.timeMapping["30-45"];
-        const exercisesPerMuscle = timeInfo.exercisesPerMuscle;
+        let totalExercises = 0;
         
-        this.selectedMuscles.forEach(muscle => {
-            const muscleExercises = this.getExercisesForMuscle(muscle, exercisesPerMuscle);
-            if (muscleExercises.length > 0) {
-                exercisesHTML += `
-                    <div class="muscle-section">
-                        <h3 class="muscle-section-title">${this.getMuscleDisplayName(muscle)}</h3>
-                        ${muscleExercises.map(exercise => this.createExerciseCard(exercise)).join('')}
-                    </div>
-                `;
+        const exercisesPerZone = Array.isArray(timeStructure.exercises_per_zone) ? 
+            timeStructure.exercises_per_zone[0] : timeStructure.exercises_per_zone;
+        
+        const maxTotalExercises = Array.isArray(timeStructure.total_exercises) ? 
+            timeStructure.total_exercises[1] : timeStructure.total_exercises;
+
+        // Add injury adaptation notice if applicable
+        if (this.injury !== 'none') {
+            exercisesHTML += `
+                <div class="injury-notice">
+                    <h4>🩺 Adaptaciones por Lesión Aplicadas</h4>
+                    <p>Su rutina ha sido automáticamente adaptada para ${this.getInjuryLabel(this.injury)}:</p>
+                    <ul>
+                        <li>✅ Ejercicios peligrosos filtrados automáticamente</li>
+                        <li>🔄 Ejercicios alternativos seguros incluidos</li>
+                        <li>⚖️ Intensidad y pesos reducidos apropiadamente</li>
+                        <li>🛡️ Equipos adaptados para mayor seguridad</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        // Generate exercises for each selected zone
+        this.selectedZones.forEach((zone) => {
+            const zoneExercises = this.getExercisesForMuscle(zone, exercisesPerZone);
+            
+            if (zoneExercises.length > 0) {
+                exercisesHTML += `<div class="zone-separator">
+                    <h4 style="color: var(--color-primary); font-size: var(--font-size-xl); margin: var(--space-24) 0; text-align: center; text-transform: uppercase; letter-spacing: 1px;">
+                        ${this.getZoneLabel(zone)}
+                    </h4>
+                </div>`;
+                
+                zoneExercises.forEach(exercise => {
+                    if (totalExercises < maxTotalExercises) {
+                        exercisesHTML += this.createDetailedExerciseCard(exercise, zone);
+                        totalExercises++;
+                    }
+                });
             }
         });
-        
-        if (!exercisesHTML) {
-            exercisesHTML = `
-                <div class="muscle-section">
-                    <h3 class="muscle-section-title">Rutina Básica Recomendada</h3>
-                    <div class="exercise-card">
-                        <div class="exercise-header">
-                            <h4 class="exercise-name">Rutina de Inicio</h4>
-                        </div>
-                        <div class="exercise-description">
-                            Recomendamos comenzar con actividades básicas como caminata de 15-20 minutos, 
-                            estiramientos suaves y ejercicios de respiración hasta que puedas seleccionar 
-                            grupos musculares específicos.
-                        </div>
+
+        if (totalExercises === 0) {
+            exercisesHTML += `
+                <div class="card">
+                    <div class="card__body">
+                        <h4>📋 Rutina Básica Recomendada</h4>
+                        <p>Dadas las condiciones reportadas, recomendamos comenzar con actividades de muy baja intensidad:</p>
+                        <ul>
+                            <li><strong>Caminata suave:</strong> 10-15 minutos diarios</li>
+                            <li><strong>Ejercicios de respiración:</strong> 5 minutos, 2 veces al día</li>
+                            <li><strong>Estiramientos básicos:</strong> Movimientos lentos y controlados</li>
+                        </ul>
                     </div>
                 </div>
             `;
         }
-        exercisesContainer.innerHTML = exercisesHTML;
+
+        exercisesList.innerHTML = exercisesHTML;
     }
 
-    getExercisesForMuscle(muscle, count) {
-        const muscleData = this.exercises[muscle];
-        if (!muscleData) return [];
-        const exerciseList = this.location === 'home' ? muscleData.home : muscleData.gym;
-        if (!exerciseList || exerciseList.length === 0) return [];
-        const shuffled = [...exerciseList].sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, Math.min(count, shuffled.length));
-    }
-
-    getMuscleDisplayName(muscle) {
-        const names = {
-            chest: "Pecho",
-            legs: "Piernas", 
-            back: "Espalda",
-            arms: "Brazos",
-            shoulders: "Hombros",
-            abs: "Abdomen",
-            cardio: "Cardio"
+    getInjuryLabel(injury) {
+        const labels = {
+            knee: "lesión de rodilla",
+            shoulder: "lesión de hombro",
+            lowerback: "lesión de espalda baja",
+            ankle: "lesión de tobillo"
         };
-        return names[muscle] || muscle;
+        return labels[injury] || "lesión";
     }
 
-    createExerciseCard(exercise) {
-        const tip = this.getTipForUser(exercise);
-        const progressionsHTML = exercise.progressions ? this.createProgressionsHTML(exercise.progressions) : '';
+    getZoneLabel(zone) {
+        const labels = {
+            chest: "💪 Pecho",
+            legs: "🦵 Piernas", 
+            back: "🏋️ Espalda",
+            arms: "💪 Brazos",
+            shoulders: "🤸 Hombros",
+            abs: "🔥 Abdomen",
+            cardio: "❤️ Cardio"
+        };
+        return labels[zone] || zone;
+    }
+
+    createDetailedExerciseCard(exercise, zone) {
+        let injuryNotices = '';
         
+        if (exercise.injury_adapted) {
+            injuryNotices += `<div class="injury-notice">⚠️ Adaptado para lesión: Peso reducido y movimiento controlado</div>`;
+        }
+        if (exercise.injury_alternative) {
+            injuryNotices += `<div class="alt-notice">✅ Ejercicio alternativo seguro para tu lesión</div>`;
+        }
+
         return `
             <div class="exercise-card">
                 <div class="exercise-header">
                     <h4 class="exercise-name">${exercise.name}</h4>
+                    <span class="exercise-classification classification-basic">Recomendado</span>
                 </div>
-                <div class="exercise-description">${exercise.description}</div>
+                
+                ${injuryNotices}
+                
+                <div class="exercise-muscles">
+                    <strong>Músculos trabajados:</strong> ${exercise.muscles}
+                </div>
+                
                 <div class="exercise-details">
                     <div class="exercise-detail">
                         <div class="exercise-detail-label">Series y Repeticiones</div>
@@ -695,86 +916,107 @@ fetch('injury_adaptations.json')
                         <div class="exercise-detail-value">${exercise.equipment}</div>
                     </div>
                     <div class="exercise-detail">
-                        <div class="exercise-detail-label">Músculos</div>
-                        <div class="exercise-detail-value">${exercise.muscles}</div>
-                    </div>
-                    <div class="exercise-detail">
                         <div class="exercise-detail-label">Dificultad</div>
                         <div class="exercise-detail-value">${exercise.difficulty}</div>
                     </div>
                 </div>
-                ${tip ? `
-                    <div class="exercise-tips">
-                        <div class="tips-label">Consejo para tu nivel</div>
-                        <div class="tips-text">${tip}</div>
+
+                <div class="exercise-description">
+                    <div class="description-title">📋 Descripción</div>
+                    <div class="description-text">${exercise.description}</div>
+                    
+                    <div class="description-section">
+                        <div class="description-section-title">💡 Consejo para Principiantes</div>
+                        <div class="description-text">${exercise.beginner_tip}</div>
                     </div>
-                ` : ''}
-                ${progressionsHTML}
+                    
+                    <div class="description-section">
+                        <div class="description-section-title">🔥 Consejo Avanzado</div>
+                        <div class="description-text">${exercise.advanced_tip}</div>
+                    </div>
+                </div>
+
                 <a href="${exercise.link}" target="_blank" rel="noopener noreferrer" class="exercise-link">
-                    Ver técnica en ExRx.net
+                    🔗 Ver técnica en ExRx.net
                 </a>
             </div>
         `;
     }
 
-    getTipForUser(exercise) {
-        if (this.userInfo.experience === 'principiante' && exercise.beginner_tip) {
-            return exercise.beginner_tip;
-        } else if (this.userInfo.experience === 'avanzado' && exercise.advanced_tip) {
-            return exercise.advanced_tip;
+    createProgressionGuidelines() {
+        const progressionInfo = document.getElementById('progression-info');
+        
+        let injuryGuidelines = '';
+        if (this.injury !== 'none') {
+            injuryGuidelines = `
+                <div class="progression-item">
+                    <div class="progression-title">🩺 Progresión con Lesión</div>
+                    <div class="progression-text">Progresa MÁS LENTAMENTE. Si sientes dolor, detente inmediatamente. Consulta profesional médico.</div>
+                </div>
+            `;
         }
-        return null;
-    }
-
-    createProgressionsHTML(progressions) {
-        return `
-            <div class="progressions">
-                <div class="progressions-label">Progresiones disponibles</div>
-                ${progressions.map((progression, index) => `
-                    <div class="progression-item"><strong>Nivel ${index + 1}:</strong> ${progression}</div>
-                `).join('')}
+        
+        progressionInfo.innerHTML = `
+            <div class="progression-grid">
+                <div class="progression-item">
+                    <div class="progression-title">📅 Frecuencia de Progresión</div>
+                    <div class="progression-text">Semana 1-2: Aprender técnica | Semana 3-4: Aumentar repeticiones | Semana 5+: Aumentar dificultad</div>
+                </div>
+                <div class="progression-item">
+                    <div class="progression-title">🎯 Progresión Inteligente</div>
+                    <div class="progression-text">Aumenta solo una variable a la vez: repeticiones → series → dificultad</div>
+                </div>
+                <div class="progression-item">
+                    <div class="progression-title">⚠️ Señales de Parar</div>
+                    <div class="progression-text">Dolor agudo, mareo, falta de aire excesiva o fatiga extrema</div>
+                </div>
+                ${injuryGuidelines}
             </div>
         `;
     }
 
     resetApp() {
-        this.selectedMuscles.clear();
-        this.userInfo = { age: '', experience: '', goal: '', time: '' };
+        this.selectedZones.clear();
+        this.userAssessment = {};
         this.location = null;
+        this.injury = "none";
+        this.safetyIssues.clear();
+        this.medicalClearanceType = null;
+        this.bypassEnabled = false;
         
-        document.querySelectorAll('.muscle-button').forEach(button => {
+        const form = document.getElementById('assessment-form');
+        if (form) form.reset();
+        
+        document.querySelectorAll('.zone-button, .location-button, .injury-button').forEach(button => {
             button.classList.remove('selected');
         });
-        document.querySelectorAll('.location-button').forEach(button => {
-            button.classList.remove('selected');
+        
+        // Reset injury selection to default
+        const noneButton = document.querySelector('.injury-button[data-injury="none"]');
+        if (noneButton) noneButton.classList.add('selected');
+        
+        document.querySelectorAll('input[name="medical-clearance"]').forEach(checkbox => {
+            checkbox.checked = false;
         });
         
-        document.getElementById('age').value = '';
-        document.getElementById('experience').value = '';
-        document.getElementById('goal').value = '';
-        document.getElementById('time').value = '';
-        
-        document.getElementById('continue-step1').disabled = true;
+        this.updateSelectedZonesList();
+        this.updateContinueButton();
+        document.getElementById('continue-step2').disabled = true;
         document.getElementById('continue-step3').disabled = true;
-        document.getElementById('routine-summary').classList.add('hidden');
+        document.getElementById('continue-step4').disabled = false;
+        document.getElementById('proceed-with-clearance').disabled = true;
         
-        this.updateSelectedMusclesList();
+        document.querySelectorAll('.step-section > div:not(.step-header)').forEach(section => {
+            if (section.id !== 'step1' && section.id !== 'step2' && section.id !== 'step3' && section.id !== 'step4') {
+                section.classList.add('hidden');
+            }
+        });
+        
         this.showStep(1);
     }
 }
 
+// Initialize the app when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    window.exerciseApp = new SimpleExerciseGenerator();
-    
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && e.target.matches('button')) {
-            e.target.click();
-        }
-    });
-
-    document.addEventListener('click', (e) => {
-        if (e.target.matches('a[target="_blank"]')) {
-            return true;
-        }
-    });
+    window.scientificApp = new ScientificExerciseApp();
 });
