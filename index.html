@@ -1,681 +1,384 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Generador de Rutinas de Ejercicio</title>
-<!-- PWA Meta Tags -->
-<meta content="#2563eb" name="theme-color"/>
-<meta content="yes" name="apple-mobile-web-app-capable"/>
-<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
-<meta content="Rutinas" name="apple-mobile-web-app-title"/>
-<meta content="Generador personalizado de rutinas de ejercicio para gimnasio y casa" name="description"/>
-<!-- PWA Manifest -->
-<link href="data:application/json;base64,ewogICJuYW1lIjogIkdlbmVyYWRvciBkZSBSdXRpbmFzIGRlIEVqZXJjaWNpbyIsCiAgInNob3J0X25hbWUiOiAiUnV0aW5hcyIsCiAgImRlc2NyaXB0aW9uIjogIkdlbmVyYWRvciBwZXJzb25hbGl6YWRvIGRlIHJ1dGluYXMgZGUgZWplcmNpY2lvIiwKICAic3RhcnRfdXJsIjogIi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNmZmZmZmYiLAogICJ0aGVtZV9jb2xvciI6ICIjMjU2M2ViIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJyUzRSUzQ3RleHQgeT0nLjllbScgZm9udC1zaXplPSc5MCclM0UlRjAlOUYlOTIlQUElM0MvdGV4dCUzRSUzQy9zdmclM0UiLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9LAogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0N0ZXh0IHk9Jy45ZW0nIGZvbnQtc2l6ZT0nOTAnJTNFJUYwJTlGJTkyJUFBJTNDL3RleHQlM0UlM0Mvc3ZnJTNFIiwKICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfQogIF0KfQ==" rel="manifest"/>
-<!-- Apple Touch Icon (inline SVG as data URI) -->
-<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%232563eb' width='100' height='100'/%3E%3Ctext y='.9em' font-size='90' text-anchor='middle' x='50' fill='white'%3E💪%3C/text%3E%3C/svg%3E" rel="apple-touch-icon"/>
-<style>
-        :root {
-            --color-primary: #2563eb;
-            --color-primary-dark: #1e40af;
-            --color-secondary: #10b981;
-            --color-danger: #ef4444;
-            --color-warning: #f59e0b;
-            --color-text: #1f2937;
-            --color-text-secondary: #6b7280;
-            --color-background: #f9fafb;
-            --color-surface: #ffffff;
-            --color-border: #e5e7eb;
-            --space-4: 0.25rem;
-            --space-8: 0.5rem;
-            --space-12: 0.75rem;
-            --space-16: 1rem;
-            --space-20: 1.25rem;
-            --space-24: 1.5rem;
-            --space-32: 2rem;
-            --space-48: 3rem;
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--color-background);
-            color: var(--color-text);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: var(--space-16);
-        }
-
-        .main-header {
-            text-align: center;
-            margin-bottom: var(--space-48);
-            padding: var(--space-24);
-            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-            color: white;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .main-header h1 {
-            font-size: 2rem;
-            margin-bottom: var(--space-12);
-        }
-
-        .subtitle {
-            font-size: 1.125rem;
-            opacity: 0.95;
-            margin-bottom: var(--space-8);
-        }
-
-        .attribution {
-            font-size: 0.875rem;
-            opacity: 0.85;
-        }
-
-        .attribution a {
-            color: white;
-            text-decoration: underline;
-        }
-
-        .step-section {
-            background: var(--color-surface);
-            padding: var(--space-32);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            margin-bottom: var(--space-32);
-        }
-
-        .step-section.hidden {
-            display: none;
-        }
-
-        .step-header {
-            text-align: center;
-            margin-bottom: var(--space-32);
-        }
-
-        .step-header h2 {
-            font-size: 1.75rem;
-            color: var(--color-primary);
-            margin-bottom: var(--space-12);
-        }
-
-        .step-instruction {
-            color: var(--color-text-secondary);
-            font-size: 1rem;
-        }
-
-        .muscle-groups {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: var(--space-16);
-            margin-bottom: var(--space-32);
-        }
-
-        .muscle-button {
-            background: var(--color-surface);
-            border: 2px solid var(--color-border);
-            border-radius: var(--radius-lg);
-            padding: var(--space-20);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-        }
-
-        .muscle-button:hover {
-            border-color: var(--color-primary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .muscle-button.selected {
-            border-color: var(--color-primary);
-            background-color: var(--color-primary);
-            color: white;
-        }
-
-        .muscle-icon {
-            font-size: 2.5rem;
-            margin-bottom: var(--space-8);
-        }
-
-        .muscle-name {
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .selected-muscles {
-            background: var(--color-background);
-            padding: var(--space-20);
-            border-radius: var(--radius-md);
-            margin-bottom: var(--space-24);
-        }
-
-        .selected-muscles h3 {
-            font-size: 1.125rem;
-            margin-bottom: var(--space-12);
-            color: var(--color-primary);
-        }
-
-        .selected-muscle-tag {
-            display: inline-block;
-            background: var(--color-primary);
-            color: white;
-            padding: var(--space-8) var(--space-16);
-            border-radius: var(--radius-md);
-            margin: var(--space-4);
-            font-size: 0.875rem;
-        }
-
-        .simple-form {
-            margin-bottom: var(--space-32);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--space-20);
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-label {
-            font-weight: 600;
-            margin-bottom: var(--space-8);
-            color: var(--color-text);
-        }
-
-        .form-control {
-            padding: var(--space-12);
-            border: 2px solid var(--color-border);
-            border-radius: var(--radius-md);
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--color-primary);
-        }
-
-        .location-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--space-24);
-            margin-bottom: var(--space-32);
-        }
-
-        .location-button {
-            background: var(--color-surface);
-            border: 3px solid var(--color-border);
-            border-radius: var(--radius-lg);
-            padding: var(--space-32);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-        }
-
-        .location-button:hover {
-            border-color: var(--color-primary);
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .location-button.selected {
-            border-color: var(--color-primary);
-            background-color: var(--color-primary);
-            color: white;
-        }
-
-        .location-icon {
-            font-size: 4rem;
-            margin-bottom: var(--space-16);
-        }
-
-        .location-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: var(--space-12);
-        }
-
-        .location-description {
-            font-size: 0.875rem;
-            opacity: 0.8;
-        }
-
-        .btn {
-            padding: var(--space-16) var(--space-32);
-            border-radius: var(--radius-md);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: none;
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn--primary {
-            background: var(--color-primary);
-            color: white;
-        }
-
-        .btn--primary:hover:not(:disabled) {
-            background: var(--color-primary-dark);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn--outline {
-            background: transparent;
-            border: 2px solid var(--color-primary);
-            color: var(--color-primary);
-        }
-
-        .btn--outline:hover {
-            background: var(--color-primary);
-            color: white;
-        }
-
-        .btn--full-width {
-            width: 100%;
-        }
-
-        .navigation-buttons {
-            display: flex;
-            gap: var(--space-16);
-            justify-content: space-between;
-        }
-
-        .navigation-buttons button {
-            flex: 1;
-        }
-
-        .routine-summary {
-            background: var(--color-background);
-            padding: var(--space-24);
-            border-radius: var(--radius-lg);
-            margin-bottom: var(--space-32);
-        }
-
-        .routine-summary h3 {
-            font-size: 1.25rem;
-            color: var(--color-primary);
-            margin-bottom: var(--space-20);
-            text-align: center;
-        }
-
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: var(--space-16);
-        }
-
-        .summary-item {
-            background: var(--color-surface);
-            padding: var(--space-16);
-            border-radius: var(--radius-md);
-            text-align: center;
-        }
-
-        .summary-label {
-            font-size: 0.875rem;
-            color: var(--color-text-secondary);
-            margin-bottom: var(--space-8);
-        }
-
-        .summary-value {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--color-primary);
-        }
-
-        .exercises-container {
-            margin-bottom: var(--space-32);
-        }
-
-        .muscle-section {
-            margin-bottom: var(--space-32);
-        }
-
-        .muscle-section-title {
-            font-size: 1.5rem;
-            color: var(--color-primary);
-            margin-bottom: var(--space-20);
-            padding-bottom: var(--space-12);
-            border-bottom: 3px solid var(--color-primary);
-        }
-
-        .exercise-card {
-            background: var(--color-surface);
-            border: 2px solid var(--color-border);
-            border-radius: var(--radius-lg);
-            padding: var(--space-24);
-            margin-bottom: var(--space-20);
-            transition: box-shadow 0.2s;
-        }
-
-        .exercise-card:hover {
-            box-shadow: var(--shadow-md);
-        }
-
-        .exercise-header {
-            margin-bottom: var(--space-16);
-        }
-
-        .exercise-name {
-            font-size: 1.25rem;
-            color: var(--color-text);
-            margin-bottom: var(--space-8);
-        }
-
-        .exercise-description {
-            color: var(--color-text-secondary);
-            margin-bottom: var(--space-20);
-            line-height: 1.6;
-        }
-
-        .exercise-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: var(--space-16);
-            margin-bottom: var(--space-20);
-        }
-
-        .exercise-detail {
-            background: var(--color-background);
-            padding: var(--space-12);
-            border-radius: var(--radius-md);
-        }
-
-        .exercise-detail-label {
-            font-size: 0.75rem;
-            color: var(--color-text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: var(--space-4);
-        }
-
-        .exercise-detail-value {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--color-text);
-        }
-
-        .exercise-tips {
-            background: #fef3c7;
-            border-left: 4px solid var(--color-warning);
-            padding: var(--space-16);
-            border-radius: var(--radius-md);
-            margin-bottom: var(--space-16);
-        }
-
-        .tips-label {
-            font-weight: 700;
-            color: #92400e;
-            margin-bottom: var(--space-8);
-        }
-
-        .tips-text {
-            color: #78350f;
-            font-size: 0.9rem;
-        }
-
-        .progressions {
-            background: #dbeafe;
-            border-left: 4px solid var(--color-primary);
-            padding: var(--space-16);
-            border-radius: var(--radius-md);
-            margin-bottom: var(--space-16);
-        }
-
-        .progressions-label {
-            font-weight: 700;
-            color: var(--color-primary-dark);
-            margin-bottom: var(--space-12);
-        }
-
-        .progression-item {
-            color: var(--color-primary-dark);
-            font-size: 0.9rem;
-            margin-bottom: var(--space-8);
-        }
-
-        .exercise-link {
-            display: inline-block;
-            color: var(--color-primary);
-            text-decoration: none;
-            font-weight: 600;
-            padding: var(--space-12) var(--space-16);
-            border: 2px solid var(--color-primary);
-            border-radius: var(--radius-md);
-            transition: all 0.2s;
-        }
-
-        .exercise-link:hover {
-            background: var(--color-primary);
-            color: white;
-        }
-
-        .routine-footer {
-            margin-top: var(--space-48);
-        }
-
-        .evidence-note {
-            background: var(--color-background);
-            padding: var(--space-20);
-            border-radius: var(--radius-md);
-            margin-bottom: var(--space-24);
-            text-align: center;
-        }
-
-        .evidence-note a {
-            color: var(--color-primary);
-            font-weight: 600;
-        }
-
-        .safety-note {
-            background: #fef2f2;
-            border: 2px solid var(--color-danger);
-            border-radius: var(--radius-lg);
-            padding: var(--space-24);
-            margin-top: var(--space-48);
-            text-align: center;
-        }
-
-        .safety-note h3 {
-            color: var(--color-danger);
-            margin-bottom: var(--space-12);
-        }
-
-        .safety-note p {
-            color: #7f1d1d;
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                padding: var(--space-12);
-            }
-
-            .main-header h1 {
-                font-size: 1.5rem;
-            }
-
-            .step-section {
-                padding: var(--space-20);
-            }
-
-            .muscle-groups {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-                gap: var(--space-12);
-            }
-
-            .navigation-buttons {
-                flex-direction: column;
-            }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescripción Científica de Ejercicio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-<header class="main-header">
-<h1>💪 Generador de Rutinas de Ejercicio</h1>
-<p class="subtitle">Rutinas personalizadas para gimnasio y casa</p>
-<p class="attribution">Ejercicios cortesía de <a href="https://exrx.net" target="_blank">ExRx.net</a></p>
-</header>
-<!-- Paso 1: Seleccionar grupos musculares -->
-<div class="step-section" id="step1">
-<div class="step-header">
-<h2>🎯 Paso 1: Selecciona los grupos musculares a entrenar</h2>
-<p class="step-instruction">Elige las áreas que quieres trabajar en tu rutina</p>
-</div>
-<div class="muscle-groups">
-<button class="muscle-button" data-muscle="chest">
-<div class="muscle-icon">💪</div>
-<div class="muscle-name">Pecho</div>
-</button>
-<button class="muscle-button" data-muscle="legs">
-<div class="muscle-icon">🦵</div>
-<div class="muscle-name">Piernas</div>
-</button>
-<button class="muscle-button" data-muscle="back">
-<div class="muscle-icon">🏋️</div>
-<div class="muscle-name">Espalda</div>
-</button>
-<button class="muscle-button" data-muscle="arms">
-<div class="muscle-icon">💪</div>
-<div class="muscle-name">Brazos</div>
-</button>
-<button class="muscle-button" data-muscle="shoulders">
-<div class="muscle-icon">🏋️‍♂️</div>
-<div class="muscle-name">Hombros</div>
-</button>
-<button class="muscle-button" data-muscle="abs">
-<div class="muscle-icon">🏃</div>
-<div class="muscle-name">Abdomen</div>
-</button>
-<button class="muscle-button" data-muscle="cardio">
-<div class="muscle-icon">❤️</div>
-<div class="muscle-name">Cardio</div>
-</button>
-</div>
-<div class="selected-muscles">
-<h3>✅ Grupos seleccionados:</h3>
-<div id="selected-list">Ningún grupo muscular seleccionado</div>
-</div>
-<button class="btn btn--primary btn--full-width" disabled="" id="continue-step1">
-                ➡️ Continuar a Información Personal
-            </button>
-</div>
-<!-- Paso 2: Información personal simple -->
-<div class="step-section hidden" id="step2">
-<div class="step-header">
-<h2>👤 Paso 2: Información personal (opcional)</h2>
-<p class="step-instruction">Ayúdanos a personalizar tu rutina</p>
-</div>
-<div class="simple-form">
-<div class="form-grid">
-<div class="form-group">
-<label class="form-label" for="age">Edad</label>
-<select class="form-control" id="age">
-<option value="">Seleccionar...</option>
-<option value="18-29">18-29 años</option>
-<option value="30-39">30-39 años</option>
-<option value="40-49">40-49 años</option>
-<option value="50-59">50-59 años</option>
-<option value="60+">60+ años</option>
-</select>
-</div>
-<div class="form-group">
-<label class="form-label" for="experience">Experiencia</label>
-<select class="form-control" id="experience">
-<option value="">Seleccionar...</option>
-<option value="principiante">Principiante</option>
-<option value="intermedio">Intermedio</option>
-<option value="avanzado">Avanzado</option>
-</select>
-</div>
-<div class="form-group">
-<label class="form-label" for="goal">Objetivo principal</label>
-<select class="form-control" id="goal">
-<option value="">Seleccionar...</option>
-<option value="health">Salud general</option>
-<option value="strength">Ganar fuerza</option>
-<option value="muscle">Ganar músculo</option>
-<option value="weight_loss">Perder peso</option>
-</select>
-</div>
-<div class="form-group">
-<label class="form-label" for="time">Tiempo disponible</label>
-<select class="form-control" id="time">
-<option value="">Seleccionar...</option>
-<option value="15-30">15-30 minutos</option>
-<option value="30-45">30-45 minutos</option>
-<option value="45-60">45-60 minutos</option>
-<option value="60+">Más de 60 minutos</option>
-</select>
-</div>
-</div>
-</div>
-<div class="navigation-buttons">
-<button class="btn btn--outline" id="back-step2">⬅️ Volver</button>
-<button class="btn btn--primary" id="continue-step2">➡️ Seleccionar Ubicación</button>
-</div>
-</div>
-<!-- Paso 3: Ubicación -->
-<div class="step-section hidden" id="step3">
-<div class="step-header">
-<h2>🏠 Paso 3: ¿Dónde vas a entrenar?</h2>
-<p class="step-instruction">Esto nos permite adaptar los ejercicios a tu equipo disponible</p>
-</div>
-<div class="location-options">
-<button class="location-button" data-location="home">
-<div class="location-icon">🏠</div>
-<div class="location-name">En Casa</div>
-<div class="location-description">Ejercicios con peso corporal y equipamiento básico</div>
-</button>
-<button class="location-button" data-location="gym">
-<div class="location-icon">🏋️‍♂️</div>
-<div class="location-name">En Gimnasio</div>
-<div class="location-description">Acceso completo a máquinas y equipos</div>
-</button>
-</div>
-<div class="navigation-buttons">
-<button class="btn btn--outline" id="back-step3">⬅️ Volver</button>
-<button class="btn btn--primary" disabled="" id="continue-step3">➡️ Generar Rutina</button>
-</div>
-</div>
-<!-- Paso 4: Rutina generada -->
+    <div class="container">
+        <header class="main-header">
+            <h1>🏥 Prescripción Científica de Ejercicio</h1>
+            <p class="subtitle">Rutinas personalizadas basadas en evidencia científica</p>
+            <p class="attribution">Ejercicios cortesía de <a href="https://exrx.net" target="_blank">ExRx.net</a></p>
+        </header>
 
-<!-- Advertencia de seguridad -->
-<footer class="safety-note">
-<h3>⚠️ Importante - Seguridad</h3>
-<p>Consulta con un profesional de salud antes de comenzar cualquier programa de ejercicio. Si experimentas dolor o molestias, detén el ejercicio inmediatamente.</p>
-</footer>
-</div>
-<script src="app.js"></script>
-<div class="step-section hidden" id="step4"><div class="step-header"><h2>Paso 4: Selección de Dolor o Lesión</h2><p class="step-instruction">Indica si tienes alguna molestia o lesión para adaptar tu rutina.</p></div><div class="injury-options" id="injury-options"></div><div class="navigation-buttons"><button class="btn btn--secondary" id="back-step4">Atrás</button><button class="btn btn--primary" id="continue-step4">Continuar</button></div></div></body>
+        <!-- Paso 1: Seleccionar zonas del cuerpo -->
+        <div id="step1" class="step-section">
+            <div class="step-header">
+                <h2>🎯 Paso 1: ¿Qué grupos musculares desea entrenar?</h2>
+                <p class="step-instruction">Seleccione las áreas que desea fortalecer (1-4 grupos recomendados)</p>
+            </div>
+
+            <div class="body-zones">
+                <button class="zone-button" data-zone="chest">
+                    <div class="zone-icon">💪</div>
+                    <div class="zone-name">Pecho</div>
+                </button>
+                <button class="zone-button" data-zone="legs">
+                    <div class="zone-icon">🦵</div>
+                    <div class="zone-name">Piernas</div>
+                </button>
+                <button class="zone-button" data-zone="back">
+                    <div class="zone-icon">🏋️</div>
+                    <div class="zone-name">Espalda</div>
+                </button>
+                <button class="zone-button" data-zone="arms">
+                    <div class="zone-icon">💪</div>
+                    <div class="zone-name">Brazos</div>
+                </button>
+                <button class="zone-button" data-zone="shoulders">
+                    <div class="zone-icon">🤸</div>
+                    <div class="zone-name">Hombros</div>
+                </button>
+                <button class="zone-button" data-zone="abs">
+                    <div class="zone-icon">🔥</div>
+                    <div class="zone-name">Abdomen</div>
+                </button>
+                <button class="zone-button" data-zone="cardio">
+                    <div class="zone-icon">❤️</div>
+                    <div class="zone-name">Cardio</div>
+                </button>
+            </div>
+
+            <div class="selected-zones">
+                <h3>✅ Grupos musculares seleccionados:</h3>
+                <div id="selected-list">Ningún grupo muscular seleccionado</div>
+            </div>
+
+            <button id="continue-step1" class="btn btn--primary btn--full-width" disabled>
+                ➡️ Continuar a Evaluación Personal
+            </button>
+        </div>
+
+        <!-- Paso 2: Evaluación personal -->
+        <div id="step2" class="step-section hidden">
+            <div class="step-header">
+                <h2>📋 Paso 2: Evaluación Personal</h2>
+                <p class="step-instruction">Esta información nos permite crear una rutina segura y efectiva</p>
+            </div>
+
+            <form id="assessment-form" class="assessment-form">
+                <div class="form-section">
+                    <h3>👤 Información Demográfica</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="age">Edad *</label>
+                            <input type="number" id="age" class="form-control" min="16" max="99" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="sex">Sexo *</label>
+                            <select id="sex" class="form-control" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="masculino">Masculino</option>
+                                <option value="femenino">Femenino</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="height">Estatura (cm) *</label>
+                            <input type="number" id="height" class="form-control" min="120" max="220" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="weight">Peso (kg) *</label>
+                            <input type="number" id="weight" class="form-control" min="30" max="200" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>🏃 Estado de Salud y Actividad</h3>
+                    <div class="form-group">
+                        <label class="form-label" for="activity-level">Nivel de actividad actual *</label>
+                        <select id="activity-level" class="form-control" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="sedentary">Sedentario (poco o nada de ejercicio)</option>
+                            <option value="lightly_active">Ligeramente activo (ejercicio ligero 1-3 días/semana)</option>
+                            <option value="moderately_active">Moderadamente activo (ejercicio moderado 3-5 días/semana)</option>
+                            <option value="very_active">Muy activo (ejercicio intenso 6-7 días/semana)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="experience">Experiencia con ejercicio</label>
+                        <select id="experience" class="form-control">
+                            <option value="">Seleccionar...</option>
+                            <option value="never">Nunca he hecho ejercicio estructurado</option>
+                            <option value="beginner">Principiante (menos de 6 meses)</option>
+                            <option value="intermediate">Intermedio (6 meses - 2 años)</option>
+                            <option value="advanced">Avanzado (más de 2 años)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>🏥 Condiciones Médicas</h3>
+                    <div class="checkbox-group">
+                        <label class="form-label">¿Tiene alguna de estas condiciones? (marque todas las que apliquen)</label>
+                        <div class="checkbox-list">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="conditions" value="diabetes">
+                                <span>Diabetes</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="conditions" value="hipertension">
+                                <span>Hipertensión</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="conditions" value="enfermedad_cardiaca">
+                                <span>Enfermedad cardíaca</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="conditions" value="artritis">
+                                <span>Artritis</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="conditions" value="osteoporosis">
+                                <span>Osteoporosis</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="conditions" value="ninguna">
+                                <span>Ninguna</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>🎯 Objetivos de Entrenamiento</h3>
+                    <div class="form-group">
+                        <label class="form-label" for="primary-goal">Objetivo principal</label>
+                        <select id="primary-goal" class="form-control">
+                            <option value="">Seleccionar...</option>
+                            <option value="general_health">Salud general y bienestar</option>
+                            <option value="weight_loss">Pérdida de peso</option>
+                            <option value="muscle_gain">Ganancia muscular</option>
+                            <option value="strength">Aumento de fuerza</option>
+                            <option value="endurance">Mejorar resistencia</option>
+                            <option value="rehabilitation">Rehabilitación/recuperación</option>
+                        </select>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="available-time">Tiempo disponible por sesión *</label>
+                            <select id="available-time" class="form-control" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="15-30">15-30 minutos por sesión</option>
+                                <option value="30-45">30-45 minutos por sesión</option>
+                                <option value="45-60">45-60 minutos por sesión</option>
+                                <option value="60+">Más de 60 minutos por sesión</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="frequency">Frecuencia preferida</label>
+                            <select id="frequency" class="form-control">
+                                <option value="">Seleccionar...</option>
+                                <option value="2">2 días por semana</option>
+                                <option value="3">3 días por semana</option>
+                                <option value="4">4 días por semana</option>
+                                <option value="5+">5 o más días por semana</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button type="button" id="back-step2" class="btn btn--outline">
+                        ⬅️ Volver
+                    </button>
+                    <button type="button" id="continue-step2" class="btn btn--primary">
+                        ➡️ Seleccionar Ubicación
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Paso 3: Selección de ubicación de entrenamiento -->
+        <div id="step3" class="step-section hidden">
+            <div class="step-header">
+                <h2>🏠 Paso 3: ¿Dónde va a entrenar?</h2>
+                <p class="step-instruction">Esto nos permite adaptar los ejercicios a su ambiente</p>
+            </div>
+
+            <div class="location-options">
+                <button class="location-button" data-location="home">
+                    <div class="location-icon">🏠</div>
+                    <div class="location-name">En Casa</div>
+                    <div class="location-description">Ejercicios con peso corporal y equipamiento mínimo</div>
+                </button>
+                <button class="location-button" data-location="gym">
+                    <div class="location-icon">🏋️‍♂️</div>
+                    <div class="location-name">En Gimnasio</div>
+                    <div class="location-description">Acceso completo a equipos y máquinas</div>
+                </button>
+            </div>
+
+            <div class="navigation-buttons">
+                <button id="back-step3" class="btn btn--outline">
+                    ⬅️ Volver
+                </button>
+                <button id="continue-step3" class="btn btn--primary" disabled>
+                    ➡️ Selección de Lesiones
+                </button>
+            </div>
+        </div>
+
+        <!-- Paso 4: Selección de lesiones -->
+        <div id="step4" class="step-section hidden">
+            <div class="step-header">
+                <h2>🩺 Paso 4: ¿Tiene alguna lesión o molestia?</h2>
+                <p class="step-instruction">Adaptaremos automáticamente sus ejercicios para mayor seguridad</p>
+            </div>
+
+            <div class="injury-selection">
+                <div class="injury-grid">
+                    <button class="injury-button selected" data-injury="none">
+                        <div class="injury-icon">✅</div>
+                        <div class="injury-name">Sin lesiones</div>
+                        <div class="injury-description">No tengo lesiones o molestias</div>
+                    </button>
+                    <button class="injury-button" data-injury="knee">
+                        <div class="injury-icon">🦵</div>
+                        <div class="injury-name">Rodilla</div>
+                        <div class="injury-description">Dolor o molestias en rodillas</div>
+                    </button>
+                    <button class="injury-button" data-injury="shoulder">
+                        <div class="injury-icon">🤲</div>
+                        <div class="injury-name">Hombro</div>
+                        <div class="injury-description">Dolor en hombros o cuello</div>
+                    </button>
+                    <button class="injury-button" data-injury="lowerback">
+                        <div class="injury-icon">🔥</div>
+                        <div class="injury-name">Espalda Baja</div>
+                        <div class="injury-description">Dolor lumbar o espalda baja</div>
+                    </button>
+                    <button class="injury-button" data-injury="ankle">
+                        <div class="injury-icon">🦶</div>
+                        <div class="injury-name">Tobillo</div>
+                        <div class="injury-description">Molestias en tobillos o pies</div>
+                    </button>
+                </div>
+
+                <div class="injury-info">
+                    <div id="injury-description" class="injury-description-box">
+                        <h4>📋 Adaptaciones Automáticas</h4>
+                        <p>Seleccione su lesión y adaptaremos automáticamente:</p>
+                        <ul>
+                            <li>✅ <strong>Ejercicios seguros:</strong> Filtraremos ejercicios que puedan agravar su lesión</li>
+                            <li>🔄 <strong>Alternativas:</strong> Añadiremos ejercicios específicos recomendados</li>
+                            <li>⚖️ <strong>Intensidad:</strong> Reduciremos pesos y repeticiones apropiadamente</li>
+                            <li>🛡️ <strong>Modificaciones:</strong> Adaptaremos equipos y técnicas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button id="back-step4" class="btn btn--outline">
+                    ⬅️ Volver
+                </button>
+                <button id="continue-step4" class="btn btn--primary">
+                    ➡️ Generar Rutina Adaptada
+                </button>
+            </div>
+        </div>
+
+        <!-- Paso 5: Rutina generada -->
+        <div id="step5" class="step-section hidden">
+            <div class="step-header">
+                <h2>🎉 Su Prescripción de Ejercicio Personalizada</h2>
+                <p class="step-instruction">Basada en evidencia científica y adaptada para su lesión</p>
+            </div>
+
+            <!-- Medical clearance section with bypass options -->
+            <div id="medical-clearance" class="medical-alert hidden">
+                <h3>🚨 Recomendación Médica</h3>
+                <div id="clearance-message"></div>
+                
+                <div id="clearance-options" class="clearance-options">
+                    <h4>Para continuar con su rutina de ejercicios:</h4>
+                    <div class="clearance-checkboxes">
+                        <label class="clearance-item">
+                            <input type="checkbox" name="medical-clearance" value="doctor_consulted">
+                            <span>✅ He consultado con mi médico sobre mi condición y el ejercicio</span>
+                        </label>
+                        <label class="clearance-item">
+                            <input type="checkbox" name="medical-clearance" value="understand_risks">
+                            <span>⚠️ Entiendo los riesgos y asumo la responsabilidad completa</span>
+                        </label>
+                        <label class="clearance-item">
+                            <input type="checkbox" name="medical-clearance" value="mild_condition">
+                            <span>🩺 Mi condición es leve y estoy bajo control médico</span>
+                        </label>
+                    </div>
+                    <button id="proceed-with-clearance" class="btn btn--primary" disabled>
+                        Continuar con Rutina Personalizada
+                    </button>
+                </div>
+            </div>
+
+            <!-- Enhanced disclaimer section -->
+            <div id="enhanced-disclaimer" class="enhanced-disclaimer hidden">
+                <h3>📋 Descargo de Responsabilidad Médica</h3>
+                <div id="disclaimer-message"></div>
+            </div>
+
+            <div id="contraindications-section" class="warnings-section hidden">
+                <h3>⚠️ Modificaciones por Seguridad</h3>
+                <div id="contraindications-list"></div>
+            </div>
+
+            <div id="prescription-summary" class="prescription-summary hidden">
+                <h3>📋 Resumen de su Prescripción</h3>
+                <div id="user-profile"></div>
+            </div>
+
+            <div id="routine-structure" class="routine-structure hidden">
+                <h3>⏱️ Estructura de su Rutina</h3>
+                <div id="routine-breakdown"></div>
+            </div>
+
+            <div id="exercises-section" class="exercises-section hidden">
+                <h3>💪 Ejercicios Recomendados</h3>
+                <div id="exercises-list"></div>
+            </div>
+
+            <div id="progression-guidelines" class="progression-section hidden">
+                <h3>📈 Guías de Progresión</h3>
+                <div id="progression-info"></div>
+            </div>
+
+            <div id="routine-footer" class="routine-footer hidden">
+                <div class="evidence-citation">
+                    <p><strong>Evidencia Científica:</strong> Esta prescripción sigue las guías del American College of Sports Medicine (ACSM) y está basada en literatura científica revisada por pares.</p>
+                    <p><strong>Fuente de ejercicios:</strong> <a href="https://exrx.net" target="_blank">ExRx.net Exercise Directory</a></p>
+                </div>
+
+                <button id="restart" class="btn btn--outline btn--full-width">
+                    🔄 Nueva Evaluación
+                </button>
+            </div>
+        </div>
+
+        <!-- Advertencia de seguridad -->
+        <footer class="safety-disclaimer">
+            <h3>⚠️ IMPORTANTE - SEGURIDAD</h3>
+            <p>Esta aplicación proporciona recomendaciones generales basadas en evidencia científica. NO reemplaza el consejo médico profesional. Si tiene condiciones médicas, dolor persistente, o dudas sobre su salud, consulte a un profesional médico antes de comenzar cualquier programa de ejercicio.</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
 </html>
