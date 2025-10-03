@@ -1,0 +1,65 @@
+{
+  "knee": {
+    "avoid": [
+      "Sentadilla con Barra",
+      "Estocadas Alternadas",
+      "Jumping Jacks",
+      "Mountain Climbers"
+    ],
+    "prefer": [
+      "Sentadilla parcial",
+      "Glute bridges",
+      "Wall sits",
+      "Bicicleta Estática",
+      "Caminata Vigorosa"
+    ]
+  },
+  "shoulder": {
+    "avoid": [
+      "Press Militar",
+      "Press de Banca con Barra",
+      "Fondos en Silla",
+      "Flexiones Pike"
+    ],
+    "prefer": [
+      "Scapular stabilization",
+      "Elevaciones Laterales",
+      "Remo Invertido",
+      "Plancha Estándar"
+    ]
+  },
+  "lower_back": {
+    "avoid": [
+      "Peso Muerto Rumano",
+      "Remo con Barra",
+      "Crunch Abdominal"
+    ],
+    "prefer": [
+      "Superman",
+      "Plancha Estándar",
+      "Caminata Vigorosa"
+    ]
+  },
+  "ankle": {
+    "avoid": [
+      "Jumping Jacks",
+      "Mountain Climbers",
+      "Estocadas Alternadas"
+    ],
+    "prefer": [
+      "Remo con Barra",
+      "Remo Invertido",
+      "Plancha Estándar",
+      "Bicicleta Estática"
+    ]
+  },
+  "general_pain": {
+    "avoid": [],
+    "prefer": [
+      "Caminata Vigorosa",
+      "Plancha Estándar",
+      "Superman",
+      "Elevaciones Laterales"
+    ]
+  }
+}
