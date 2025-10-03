@@ -44,7 +44,7 @@ class ScientificExerciseApp {
                         sets: "3 series de 8-12 repeticiones",
                         equipment: "Barra olímpica y banco",
                         muscles: "Pectoral Mayor, Tríceps, Deltoides Anterior",
-                        link: "https://exrx.net/WeightExercises/PectoralisMajor/BBBenchPress",
+                        link: "https://exrx.net/WeightExercises/PectoralSternal/BBBenchPress",
                         difficulty: "intermedio",
                         beginner_tip: "Usa siempre un spotter para cargas pesadas",
                         advanced_tip: "Varía el agarre para trabajar diferentes ángulos"
@@ -55,7 +55,7 @@ class ScientificExerciseApp {
                         sets: "3 series de 10-15 repeticiones",
                         equipment: "Par de mancuernas y banco inclinado (30-45°)",
                         muscles: "Pectoral Mayor (fibras superiores), Deltoides Anterior",
-                        link: "https://exrx.net/WeightExercises/PectoralisMajor/DBInclinePress",
+                        link: "https://exrx.net/WeightExercises/PectoralClavicular/DBInclineBenchPress",
                         difficulty: "principiante-intermedio",
                         beginner_tip: "Comienza con peso ligero para dominar el patrón",
                         advanced_tip: "Enfócate en la contracción al final del movimiento"
@@ -68,7 +68,7 @@ class ScientificExerciseApp {
                         sets: "3 series de 8-20 repeticiones",
                         equipment: "Peso corporal solamente",
                         muscles: "Pectoral Mayor, Tríceps, Deltoides Anterior, Core",
-                        link: "https://exrx.net/WeightExercises/PectoralisMajor/BWPushup",
+                        link: "https://exrx.net/WeightExercises/PectoralSternal/BWPushup",
                         difficulty: "principiante-intermedio",
                         beginner_tip: "Comienza con rodillas apoyadas si es necesario",
                         advanced_tip: "Varía la posición de las manos para diferentes énfasis"
@@ -79,7 +79,7 @@ class ScientificExerciseApp {
                         sets: "3 series de 5-12 repeticiones",
                         equipment: "Peso corporal",
                         muscles: "Tríceps, Pectoral Mayor (centro), Deltoides Anterior",
-                        link: "https://exrx.net/WeightExercises/Triceps/BWDiamondPushup",
+                        link: "https://exrx.net/WeightExercises/Triceps/BWCloseGripPushup",
                         difficulty: "intermedio-avanzado",
                         beginner_tip: "Domina flexiones regulares primero",
                         advanced_tip: "Controla la fase excéntrica para mayor activación"
@@ -105,7 +105,7 @@ class ScientificExerciseApp {
                         sets: "3 series de 8-12 repeticiones",
                         equipment: "Barra olímpica o mancuernas",
                         muscles: "Isquiotibiales, Glúteo Mayor, Erector Espinal",
-                        link: "https://exrx.net/WeightExercises/GluteusMaximus/BBRomanianDeadlift",
+                        link: "https://exrx.net/WeightExercises/GluteusMaximus/BBStiffLegDeadlift",
                         difficulty: "intermedio",
                         beginner_tip: "Enfócate en empujar las caderas hacia atrás",
                         advanced_tip: "Mantén la barra muy cerca del cuerpo"
@@ -179,7 +179,7 @@ class ScientificExerciseApp {
                         sets: "3 series de 12-20 repeticiones",
                         equipment: "Peso corporal, colchoneta opcional",
                         muscles: "Erector Espinal, Glúteos, Deltoides Posterior",
-                        link: "https://exrx.net/WeightExercises/ErectorSpinae/BWSuperman",
+                        link: "https://exrx.net/WeightExercises/ErectorSpinae/Superman",
                         difficulty: "principiante",
                         beginner_tip: "Comienza con movimientos pequeños",
                         advanced_tip: "Mantén la contracción 2-3 segundos"
@@ -257,7 +257,7 @@ class ScientificExerciseApp {
                         sets: "3 series de 6-12 repeticiones",
                         equipment: "Peso corporal",
                         muscles: "Deltoides Anterior, Tríceps, Core",
-                        link: "https://exrx.net/WeightExercises/DeltoidAnterior/BWPikePushup",
+                        link: "https://exrx.net/WeightExercises/DeltoidAnterior/BWPikePress",
                         difficulty: "intermedio",
                         beginner_tip: "Comienza con rango parcial",
                         advanced_tip: "Eleva los pies para mayor dificultad"
@@ -307,7 +307,7 @@ class ScientificExerciseApp {
                         sets: "3 series de 20-30 repeticiones",
                         equipment: "Peso corporal, colchoneta",
                         muscles: "Oblicuos, Recto Abdominal",
-                        link: "https://exrx.net/WeightExercises/Obliques/BWBicycle",
+                        link: "https://exrx.net/WeightExercises/Obliques/BWTwistingCrunch",
                         difficulty: "principiante-intermedio",
                         beginner_tip: "Ritmo controlado, no muy rápido",
                         advanced_tip: "Enfócate en la rotación del torso"
@@ -333,7 +333,7 @@ class ScientificExerciseApp {
                         sets: "20-30 minutos",
                         equipment: "Cinta de correr",
                         muscles: "Sistema cardiovascular, Piernas completas",
-                        link: "https://exrx.net/Aerobic/Exercises/Treadmill",
+                        link: "https://exrx.net/Aerobic/Exercises/TreadmillRun",
                         difficulty: "principiante-intermedio",
                         beginner_tip: "Comienza con caminata",
                         advanced_tip: "Incorpora intervalos de intensidad"
@@ -346,7 +346,7 @@ class ScientificExerciseApp {
                         sets: "3 series de 30-60 segundos",
                         equipment: "Peso corporal",
                         muscles: "Sistema cardiovascular, Piernas, Hombros",
-                        link: "https://exrx.net/WeightExercises/Cardiovascular/BWJumpingJack",
+                        link: "https://exrx.net/Aerobic/Exercises/JumpingJack",
                         difficulty: "principiante-intermedio",
                         beginner_tip: "Superficie apropiada para saltar",
                         advanced_tip: "Mantén ritmo constante"
@@ -357,7 +357,7 @@ class ScientificExerciseApp {
                         sets: "3 series de 20-30 segundos",
                         equipment: "Peso corporal",
                         muscles: "Sistema cardiovascular, Core, Hombros",
-                        link: "https://exrx.net/WeightExercises/Cardiovascular/BWMountainClimber",
+                        link: "https://exrx.net/Aerobic/Exercises/MountainClimber",
                         difficulty: "intermedio",
                         beginner_tip: "Domina plancha primero",
                         advanced_tip: "Mantén posición de plancha perfecta"
