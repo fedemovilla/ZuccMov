@@ -7,7 +7,15 @@ class SimpleExerciseGenerator {
             experience: '',
             goal: '',
             time: ''
-        };
+        
+
+    
+fetch('injury_adaptations.json')
+  .then(response => response.json())
+  .then(data => {
+    this.injuryAdaptations = data;
+  });
+};
         this.location = null;
         this.currentStep = 1;
         
@@ -429,65 +437,7 @@ class SimpleExerciseGenerator {
             weight_loss: { focus: "Pérdida de peso y definición", rest: "30-60 segundos" }
         };
 
-        
-this.injury = null;
-
-this.setupInjurySelection = function() {
-  const injuryButtons = document.querySelectorAll('.injury-button');
-  injuryButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      injuryButtons.forEach(btn => btn.classList.remove('selected'));
-      button.classList.add('selected');
-      this.injury = button.getAttribute('data-injury');
-      document.getElementById('continue-step4').disabled = false;
-    });
-  });
-
-  document.getElementById('continue-step4').addEventListener('click', () => {
-    this.showStep(5);
-  });
-
-  document.getElementById('back-step4').addEventListener('click', () => {
-    this.showStep(3);
-  });
-};
-
-this.getExercisesForMuscle = function(muscle, count) {
-  const muscleData = this.exercises[muscle];
-  if (!muscleData) return [];
-  let exerciseList = this.location === 'home' ? muscleData.home : muscleData.gym;
-  if (!exerciseList || exerciseList.length === 0) return [];
-
-  if (this.injury && this.injury !== 'none') {
-    const adaptations = this.injuryAdaptations[this.injury] || {};
-    const avoidList = adaptations.avoid || [];
-    const alternatives = adaptations.alternatives || [];
-
-    exerciseList = exerciseList.filter(ex => {
-      return !avoidList.some(term => ex.name.toLowerCase().includes(term.toLowerCase()));
-    });
-
-    if (alternatives.length > 0) {
-      const altExercises = alternatives.map(name => ({
-        name,
-        description: "Ejercicio alternativo recomendado por lesión.",
-        sets: "2-3 series de 10-15 repeticiones",
-        equipment: "Peso corporal o bajo impacto",
-        muscles: "Adaptado",
-        link: "#",
-        difficulty: "bajo impacto",
-        beginner_tip: "Realiza con cuidado y sin dolor",
-        advanced_tip: "Úsalo como recuperación"
-      }));
-      exerciseList = exerciseList.concat(altExercises);
-    }
-  }
-
-  const shuffled = [...exerciseList].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, Math.min(count, shuffled.length));
-};
-
-this.init();
+        this.init();
     }
 
     // All other methods remain exactly the same...
@@ -497,7 +447,8 @@ this.init();
         this.setupLocationSelection();
         this.setupNavigation();
         this.showStep(1);
-    }
+    
+    this.setupInjurySelection();}
 
     setupMuscleSelection() {
         const muscleButtons = document.querySelectorAll('.muscle-button');
